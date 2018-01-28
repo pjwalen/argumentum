@@ -1,7 +1,7 @@
 import datetime
 from flask import render_template, redirect, url_for
 from argumentum import app, db
-from argumentum.models import Argument, Opponent, Premise, Rebuttal
+from argumentum.models import Argument, Premise, Rebuttal
 from argumentum.forms import ArgumentForm
 
 
@@ -13,6 +13,8 @@ def index():
         argument = Argument()
         argument.title = argumentform.title.data
         argument.description = argumentform.description.data
+        argument.left_opponent = argumentform.left_opponent.data
+        argument.right_opponent = argumentform.right_opponent.data
         argument.created = datetime.datetime.now()
         argument.updated = datetime.datetime.now()
         db.session.add(argument)

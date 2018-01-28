@@ -4,6 +4,8 @@
         <thead>
             <tr>
                 <th>Title</th>
+                <th>Left Opponent</th>
+                <th>Right Opponent</th>
                 <th>Description</th>
                 <th>Created</th>
                 <th>Updated</th>
@@ -13,9 +15,11 @@
         {% for argument in arguments %}
             <tr>
                 <td><a href="{{url_for('argument', argumentid=argument.id)}}">{{argument.title}}</a></td>
+                <td>{{argument.left_opponent}}</td>
+                <td>{{argument.right_opponent}}</td>
                 <td>{{argument.description}}</td>
-                <td>{{argument.created}}</td>
-                <td>{{argument.updated}}</td>
+                <td>{{argument.created.strftime('%B %d, %Y')}}</td>
+                <td>{{argument.updated.strftime('%B %d, %Y')}}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -25,6 +29,14 @@
         <div class="form-group">
             {{ argumentform.title.label }}
             {{ argumentform.title(class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ argumentform.left_opponent.label }}
+            {{ argumentform.left_opponent(class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ argumentform.right_opponent.label }}
+            {{ argumentform.right_opponent(class_="form-control") }}
         </div>
         <div class="form-group">
             {{ argumentform.description.label }}
