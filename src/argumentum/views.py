@@ -2,7 +2,7 @@ import datetime
 from flask import render_template, redirect, url_for
 from argumentum import app, db
 from argumentum.models import Argument, Premise, Rebuttal
-from argumentum.forms import ArgumentForm
+from argumentum.forms import ArgumentForm, PremiseForm
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -24,7 +24,17 @@ def index():
     return render_template('index.j2', arguments=arguments, argumentform=argumentform)
 
 
-@app.route('/argument/<int:argumentid>')
+@app.route('/argument/<int:argumentid>', methods=['GET', 'POST'])
 def argument(argumentid):
+    argument = Argument.query.filter_by(id=argumentid).first_or_404()
+    premiseform = PremiseForm()
+    if premiseform.validate_on_submit():
+        premise = Premise()
+        premise.opponent = premiseform.opponent.data
+        premise.argumentid = premiseform.argumentid.data
+        premise.text = premiseform.text.data
+        db.session.add(premise)
+        db.session.commit()
+        return redirect(url_for('argument', argumentid=argumentid))
     # TODO: Flush out this function. This is just a stub so far.
-    return render_template('argument.j2')
+    return render_template('argument.j2', argument=argument, premiseform=premiseform)

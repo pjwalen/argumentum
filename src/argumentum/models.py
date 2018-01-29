@@ -1,3 +1,4 @@
+import enum
 from argumentum import db
 
 
@@ -7,6 +8,16 @@ class Argument(db.Model):
     description = db.Column(db.Text)
     left_opponent = db.Column(db.Text)
     right_opponent = db.Column(db.Text)
+    left_premises = db.relationship(
+        'Premise',
+        primaryjoin="and_(Premise.argumentid == Argument.id, Premise.opponent == 'left')",
+        lazy=True
+    )
+    right_premises = db.relationship(
+        'Premise',
+        primaryjoin="and_(Premise.argumentid == Argument.id, Premise.opponent == 'right')",
+        lazy=True
+    )
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
@@ -15,6 +26,7 @@ class Premise(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     argumentid = db.Column(db.Integer, db.ForeignKey('argument.id'))
     text = db.Column(db.Text)
+    opponent = db.Column(db.Text)
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 

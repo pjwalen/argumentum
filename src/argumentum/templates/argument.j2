@@ -2,60 +2,46 @@
 {% block content %}
     <div class="row">
         <div class="col">
-            <h1>Title of the argument</h1>
+            <h1>{{ argument.title }}</h1>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <h2>Patrick Walentiny</h2>
+            <h2>{{ argument.left_opponent }}</h2>
+            {% for premise in argument.left_premises %}
             <div class="alert alert-primary">
                 <p>
-                This is a fake premise to look at styling.
+                {{ premise.text }}
                 </p>
                 <form>
                     <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a rebuttal">
                 </form>
             </div>
-            <div class="alert alert-primary">
-                <p>
-                This is a fake premise to look at styling.
-                </p>
-                <form>
-                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a rebuttal">
-                </form>
-            </div>
-            <form>
-                <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a new premise">
+            {%  endfor %}
+            <form method="post">
+                {{ premiseform.csrf_token }}
+                {{ premiseform.opponent(value='left') }}
+                {{ premiseform.text(class_='form-control mb-2 mr-sm-2', placeholder="Add a new premise") }}
+                {{ premiseform.argumentid(value=argument.id) }}
             </form>
         </div>
         <div class="col">
-            <h2>Matt Byrne</h2>
+            <h2>{{ argument.right_opponent }}</h2>
+            {% for premise in argument.right_premises %}
             <div class="alert alert-primary">
                 <p>
-                This is a fake premise to look at styling.
+                {{ premise.text }}
                 </p>
                 <form>
                     <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a rebuttal">
                 </form>
             </div>
-            <div class="alert alert-primary">
-                <p>
-                This is a fake premise to look at styling.
-                </p>
-                <form>
-                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a rebuttal">
-                </form>
-            </div>
-            <div class="alert alert-primary">
-                <p>
-                This is a fake premise to look at styling.
-                </p>
-                <form>
-                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a rebuttal">
-                </form>
-            </div>
-            <form>
-                <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a new premise">
+            {%  endfor %}
+            <form method="post">
+                {{ premiseform.csrf_token }}
+                {{ premiseform.opponent(value='right') }}
+                {{ premiseform.text(class_='form-control mb-2 mr-sm-2', placeholder="Add a new premise") }}
+                {{ premiseform.argumentid(value=argument.id) }}
             </form>
         </div>
     </div>
