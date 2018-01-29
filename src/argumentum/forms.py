@@ -6,4 +6,4 @@ class ArgumentForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     left_opponent = StringField('Left Opponent', validators=[DataRequired()])
     right_opponent = StringField('Right Opponent', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[Optional()])
+    description = StringField('Description', validators=[Optional()])

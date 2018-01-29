@@ -1,47 +1,37 @@
 {% extends "base.j2" %}
 {% block content %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Left Opponent</th>
-                <th>Right Opponent</th>
-                <th>Description</th>
-                <th>Created</th>
-                <th>Updated</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for argument in arguments %}
-            <tr>
-                <td><a href="{{url_for('argument', argumentid=argument.id)}}">{{argument.title}}</a></td>
-                <td>{{argument.left_opponent}}</td>
-                <td>{{argument.right_opponent}}</td>
-                <td>{{argument.description}}</td>
-                <td>{{argument.created.strftime('%B %d, %Y')}}</td>
-                <td>{{argument.updated.strftime('%B %d, %Y')}}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <form class="form" method="post">
-        {{ argumentform.csrf_token }}
-        <div class="form-group">
-            {{ argumentform.title.label }}
-            {{ argumentform.title(class_="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ argumentform.left_opponent.label }}
-            {{ argumentform.left_opponent(class_="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ argumentform.right_opponent.label }}
-            {{ argumentform.right_opponent(class_="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ argumentform.description.label }}
-            {{ argumentform.description(class_="form-control") }}
-        </div>
-        <input type="submit" class="btn btn-primary">
-    </form>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table" style="margin-top: 15px;">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Left Opponent</th>
+                                <th>Right Opponent</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for argument in arguments %}
+                            <tr>
+                                <td><a href="{{url_for('argument', argumentid=argument.id)}}">{{argument.title}}</a></td>
+                                <td>{{argument.left_opponent}}</td>
+                                <td>{{argument.right_opponent}}</td>
+                                <td>{{argument.description}}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>{{ argumentform.title(class_="form-control mb-2 mr-sm-2", placeholder='Title', form='newArgument') }}</td>
+                            <td>{{ argumentform.left_opponent(class_="form-control mb-2 mr-sm-2", placeholder='Left Opponent', form='newArgument') }}</td>
+                            <td>{{ argumentform.right_opponent(class_="form-control mb-2 mr-sm-2", placeholder="Right Opponent", form='newArgument') }}</td>
+                            <td>{{ argumentform.description(class_="form-control mb-2 mr-sm-2", placeholder="Description", form='newArgument') }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <form method="post" id="newArgument">
+                        {{ argumentform.csrf_token }}
+                        <input type="submit" style="display: none;">
+                    </form>
+                </div>
+            </div>
 {% endblock %}

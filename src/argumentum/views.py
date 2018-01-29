@@ -27,4 +27,4 @@ def index():
 @app.route('/argument/<int:argumentid>')
 def argument(argumentid):
     # TODO: Flush out this function. This is just a stub so far.
-    return str(argumentid)
+    return render_template('argument.j2')
