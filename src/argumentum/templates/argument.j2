@@ -1,4 +1,27 @@
 {% extends "base.j2" %}
+
+{%  macro argument_list(name, premises, premiseform, argument, opponent) %}
+        <div class="col">
+            <h2>{{ name }}</h2>
+            {% for premise in premises %}
+            <div class="alert alert-primary">
+                <p>
+                {{ premise.text }}
+                </p>
+                <form>
+                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a rebuttal">
+                </form>
+            </div>
+            {%  endfor %}
+            <form method="post">
+                {{ premiseform.csrf_token }}
+                {{ premiseform.opponent(value=opponent) }}
+                {{ premiseform.text(class_='form-control mb-2 mr-sm-2', placeholder="Add a new premise") }}
+                {{ premiseform.argumentid(value=argument.id) }}
+            </form>
+        </div>
+{%  endmacro %}
+
 {% block content %}
     <div class="row">
         <div class="col">
@@ -6,43 +29,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <h2>{{ argument.left_opponent }}</h2>
-            {% for premise in argument.left_premises %}
-            <div class="alert alert-primary">
-                <p>
-                {{ premise.text }}
-                </p>
-                <form>
-                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a rebuttal">
-                </form>
-            </div>
-            {%  endfor %}
-            <form method="post">
-                {{ premiseform.csrf_token }}
-                {{ premiseform.opponent(value='left') }}
-                {{ premiseform.text(class_='form-control mb-2 mr-sm-2', placeholder="Add a new premise") }}
-                {{ premiseform.argumentid(value=argument.id) }}
-            </form>
-        </div>
-        <div class="col">
-            <h2>{{ argument.right_opponent }}</h2>
-            {% for premise in argument.right_premises %}
-            <div class="alert alert-primary">
-                <p>
-                {{ premise.text }}
-                </p>
-                <form>
-                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a rebuttal">
-                </form>
-            </div>
-            {%  endfor %}
-            <form method="post">
-                {{ premiseform.csrf_token }}
-                {{ premiseform.opponent(value='right') }}
-                {{ premiseform.text(class_='form-control mb-2 mr-sm-2', placeholder="Add a new premise") }}
-                {{ premiseform.argumentid(value=argument.id) }}
-            </form>
-        </div>
+        {{ argument_list(argument.left_opponent, argument.left_premises, premiseform, argument, 'left') }}
+        {{ argument_list(argument.right_opponent, argument.right_premises, premiseform, argument, 'right') }}
     </div>
 {% endblock %}
