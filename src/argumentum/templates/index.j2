@@ -4,27 +4,27 @@
                 <div class="col-12">
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Left Opponent</th>
-                                <th>Right Opponent</th>
-                                <th>Description</th>
+                            <tr class="row">
+                                <th class="col-md-2">Title</th>
+                                <th class="col-md-2">Left Opponent</th>
+                                <th class="col-md-2">Right Opponent</th>
+                                <th class="col-md-6">Description</th>
                             </tr>
                         </thead>
                         <tbody>
                         {% for argument in arguments %}
-                            <tr>
-                                <td><a href="{{url_for('argument', argumentid=argument.id)}}">{{argument.title}}</a></td>
-                                <td>{{argument.left_opponent}}</td>
-                                <td>{{argument.right_opponent}}</td>
-                                <td>{{argument.description}}</td>
+                            <tr class="row">
+                                <td class="col-md-2"><a href="{{url_for('argument', argumentid=argument.id)}}">{{argument.title}}</a></td>
+                                <td class="col-md-2">{{argument.left_opponent}}</td>
+                                <td class="col-md-2">{{argument.right_opponent}}</td>
+                                <td class="col-md-6">{{argument.description}}</td>
                             </tr>
                         {% endfor %}
-                        <tr>
-                            <td>{{ argumentform.title(class_="form-control mb-2 mr-sm-2", placeholder='Title', form='newArgument') }}</td>
-                            <td>{{ argumentform.left_opponent(class_="form-control mb-2 mr-sm-2", placeholder='Left Opponent', form='newArgument') }}</td>
-                            <td>{{ argumentform.right_opponent(class_="form-control mb-2 mr-sm-2", placeholder="Right Opponent", form='newArgument') }}</td>
-                            <td>{{ argumentform.description(class_="form-control mb-2 mr-sm-2", placeholder="Description", form='newArgument') }}</td>
+                        <tr class="row">
+                            <td class="col-md-2">{{ argumentform.title(class_="form-control mb-2 mr-sm-2", placeholder='Title', form='newArgument') }}</td>
+                            <td class="col-md-2">{{ argumentform.left_opponent(class_="form-control mb-2 mr-sm-2", placeholder='Left Opponent', form='newArgument') }}</td>
+                            <td class="col-md-2">{{ argumentform.right_opponent(class_="form-control mb-2 mr-sm-2", placeholder="Right Opponent", form='newArgument') }}</td>
+                            <td class="col-md-6">{{ argumentform.description(class_="form-control mb-2 mr-sm-2", placeholder="Description", form='newArgument') }}</td>
                         </tr>
                         </tbody>
                     </table>
