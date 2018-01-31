@@ -15,3 +15,8 @@ class PremiseForm(FlaskForm):
     argumentid = IntegerField('Argument ID', validators=[DataRequired()], widget=HiddenInput())
     opponent = StringField('Opponent', validators=[DataRequired(), AnyOf(['left', 'right'])], widget=HiddenInput())
     text = StringField('Text', validators=[DataRequired()])
+
+
+class EvidenceForm(FlaskForm):
+    premiseid = IntegerField('Premise ID', validators=[DataRequired()], widget=HiddenInput())
+    text = StringField('Text')

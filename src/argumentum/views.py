@@ -1,8 +1,8 @@
 import datetime
 from flask import render_template, redirect, url_for
 from argumentum import app, db
-from argumentum.models import Argument, Premise, Rebuttal
-from argumentum.forms import ArgumentForm, PremiseForm
+from argumentum.models import Argument, Premise, Evidence
+from argumentum.forms import ArgumentForm, PremiseForm, EvidenceForm
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -36,5 +36,13 @@ def argument(argumentid):
         db.session.add(premise)
         db.session.commit()
         return redirect(url_for('argument', argumentid=argumentid))
-    # TODO: Flush out this function. This is just a stub so far.
-    return render_template('argument.j2', argument=argument, premiseform=premiseform)
+
+    evidenceform = EvidenceForm()
+    if evidenceform.validate_on_submit():
+        rebuttal = Evidence()
+        rebuttal.text = evidenceform.text.data
+        rebuttal.premiseid = evidenceform.premiseid.data
+        db.session.add(rebuttal)
+        db.session.commit()
+        return redirect(url_for('argument', argumentid=argumentid))
+    return render_template('argument.j2', argument=argument, premiseform=premiseform, evidenceform=evidenceform)

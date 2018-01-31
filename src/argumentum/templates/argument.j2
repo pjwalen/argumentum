@@ -5,12 +5,39 @@
             <h2>{{ name }}</h2>
             {% for premise in premises %}
             <div class="alert alert-primary">
+                <span class="float-right">
+                    <a href=""><span class="oi oi-pencil text-info"></span></a>
+                    <a href=""><span class="oi oi-x text-danger"></span></a>
+                </span>
                 <p>
                 {{ premise.text }}
                 </p>
-                <form>
-                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Add a rebuttal">
-                </form>
+                <ul>
+                    {%  for evidence in premise.evidence %}
+                    <li>
+                        {{ evidence.text }}
+                        <span class="float-right">
+                            <a href=""><span class="oi oi-pencil text-info"></span></a>
+                            <a href=""><span class="oi oi-x text-danger"></span></a>
+                        </span>
+                    </li>
+                    {% endfor %}
+                    <li>
+                        <form method="post">
+                        {{ evidenceform.csrf_token }}
+                        {{ evidenceform.premiseid(value=premise.id) }}
+                        {{ evidenceform.text(class_='form-control form-control-sm', style='display: inline-block;', placeholder="Add evidence") }}
+                        </form>
+                    </li>
+                </ul>
+                <div class="form-group">
+                    <form method="post">
+                        {{ premiseform.csrf_token }}
+                        {{ premiseform.opponent(value=opponent) }}
+                        {{ premiseform.argumentid(value=argument.id) }}
+                        {{ premiseform.text(class_='form-control', placeholder="Add a new premise") }}
+                    </form>
+                </div>
             </div>
             {%  endfor %}
             <form method="post">

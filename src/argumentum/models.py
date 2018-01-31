@@ -25,12 +25,13 @@ class Premise(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     argumentid = db.Column(db.Integer, db.ForeignKey('argument.id'))
     text = db.Column(db.Text)
+    evidence = db.relationship('Evidence', lazy=True)
     opponent = db.Column(db.Text)
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
 
-class Rebuttal(db.Model):
+class Evidence(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     premiseid = db.Column(db.Integer, db.ForeignKey('premise.id'))
     text = db.Column(db.Text)
