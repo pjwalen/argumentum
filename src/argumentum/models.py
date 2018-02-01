@@ -9,7 +9,7 @@ class Argument(db.Model):
     right_opponent = db.Column(db.Text)
     left_premises = db.relationship(
         'Premise',
-        primaryjoin="and_(Premise.argumentid == Argument.id, Premise.opponent == 'left')",
+        primaryjoin="and_(Premise.argumentid == Argument.id, Premise.opponent == 'left', Premise.parent == None)",
         lazy=True
     )
     right_premises = db.relationship(
@@ -26,6 +26,7 @@ class Premise(db.Model):
     argumentid = db.Column(db.Integer, db.ForeignKey('argument.id'))
     text = db.Column(db.Text)
     evidence = db.relationship('Evidence', lazy=True)
+    children = db.relationship('Premise', lazy=True)
     parent = db.Column(db.Integer, db.ForeignKey('premise.id'), default=None)
     opponent = db.Column(db.Text)
     created = db.Column(db.DateTime)

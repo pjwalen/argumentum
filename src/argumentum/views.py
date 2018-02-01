@@ -32,7 +32,7 @@ def argument(argumentid):
         premise = Premise()
         premise.opponent = premiseform.opponent.data
         premise.argumentid = premiseform.argumentid.data
-        premise.parent = premise.parent.data if premise.parent else None
+        premise.parent = premiseform.parent.data
         premise.text = premiseform.text.data
         db.session.add(premise)
         db.session.commit()
