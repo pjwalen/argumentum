@@ -1,16 +1,15 @@
 {% extends "base.j2" %}
 
-{%  macro argument_list(name, premises, premiseform, argument, opponent) %}
-        <div class="col">
-            <h2>{{ name }}</h2>
-            {% for premise in premises %}
-            <div class="alert alert-primary">
+
+{% macro premise_list(premises, premiseform, argument, opponent, even_odd='even') %}
+        {% for premise in premises %}
+            <div class="alert {% if even_odd == 'even' %}alert-primary{% else %}alert-warning{% endif %}">
                 <span class="float-right">
                     <a href=""><span class="oi oi-pencil text-info"></span></a>
                     <a href=""><span class="oi oi-x text-danger"></span></a>
                 </span>
                 <p>
-                {{ premise.text }}
+                    {{ premise.text }}
                 </p>
                 <ul>
                     {%  for evidence in premise.evidence %}
@@ -30,16 +29,30 @@
                         </form>
                     </li>
                 </ul>
+                {% if even_odd == 'even' %}
+                    {{ premise_list(premise.children, premiseform, argument, opponent, even_odd='odd') }}
+                {% else %}
+                    {{ premise_list(premise.children, premiseform, argument, opponent) }}
+                {% endif %}
                 <div class="form-group">
                     <form method="post">
                         {{ premiseform.csrf_token }}
+                        {{ premiseform.parent(value=premise.id) }}
                         {{ premiseform.opponent(value=opponent) }}
                         {{ premiseform.argumentid(value=argument.id) }}
                         {{ premiseform.text(class_='form-control', placeholder="Add a new premise") }}
                     </form>
                 </div>
             </div>
-            {%  endfor %}
+
+        {% endfor %}
+{% endmacro %}
+
+
+{%  macro argument_list(name, premises, premiseform, argument, opponent) %}
+        <div class="col">
+            <h2>{{ name }}</h2>
+            {{ premise_list(premises, premiseform, argument, opponent) }}
             <form method="post">
                 {{ premiseform.csrf_token }}
                 {{ premiseform.opponent(value=opponent) }}
@@ -48,6 +61,7 @@
             </form>
         </div>
 {%  endmacro %}
+
 
 {% block content %}
     <div class="row">
