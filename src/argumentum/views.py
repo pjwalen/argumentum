@@ -32,6 +32,7 @@ def argument(argumentid):
         premise = Premise()
         premise.opponent = premiseform.opponent.data
         premise.argumentid = premiseform.argumentid.data
+        premise.parent = premise.parent.data if premise.parent else None
         premise.text = premiseform.text.data
         db.session.add(premise)
         db.session.commit()
@@ -39,10 +40,10 @@ def argument(argumentid):
 
     evidenceform = EvidenceForm()
     if evidenceform.validate_on_submit():
-        rebuttal = Evidence()
-        rebuttal.text = evidenceform.text.data
-        rebuttal.premiseid = evidenceform.premiseid.data
-        db.session.add(rebuttal)
+        evidence = Evidence()
+        evidence.text = evidenceform.text.data
+        evidence.premiseid = evidenceform.premiseid.data
+        db.session.add(evidence)
         db.session.commit()
         return redirect(url_for('argument', argumentid=argumentid))
     return render_template('argument.j2', argument=argument, premiseform=premiseform, evidenceform=evidenceform)

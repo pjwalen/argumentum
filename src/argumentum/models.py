@@ -26,6 +26,7 @@ class Premise(db.Model):
     argumentid = db.Column(db.Integer, db.ForeignKey('argument.id'))
     text = db.Column(db.Text)
     evidence = db.relationship('Evidence', lazy=True)
+    parent = db.Column(db.Integer, db.ForeignKey('premise.id'), default=None)
     opponent = db.Column(db.Text)
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)

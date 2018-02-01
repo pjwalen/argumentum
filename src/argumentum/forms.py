@@ -14,6 +14,7 @@ class ArgumentForm(FlaskForm):
 class PremiseForm(FlaskForm):
     argumentid = IntegerField('Argument ID', validators=[DataRequired()], widget=HiddenInput())
     opponent = StringField('Opponent', validators=[DataRequired(), AnyOf(['left', 'right'])], widget=HiddenInput())
+    parent = IntegerField('Premise ID', validators=[Optional()], widget=HiddenInput())
     text = StringField('Text', validators=[DataRequired()])
 
 

@@ -33,6 +33,7 @@
                 <div class="form-group">
                     <form method="post">
                         {{ premiseform.csrf_token }}
+                        {{ premiseform.parent(value=premise.id) }}
                         {{ premiseform.opponent(value=opponent) }}
                         {{ premiseform.argumentid(value=argument.id) }}
                         {{ premiseform.text(class_='form-control', placeholder="Add a new premise") }}
