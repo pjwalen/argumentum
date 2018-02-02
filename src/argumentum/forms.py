@@ -19,5 +19,6 @@ class PremiseForm(FlaskForm):
 
 
 class EvidenceForm(FlaskForm):
+    act = StringField('Action', validators=[AnyOf(['create', 'delete'])], widget=HiddenInput())
     premiseid = IntegerField('Premise ID', validators=[DataRequired()], widget=HiddenInput())
     text = StringField('Text')

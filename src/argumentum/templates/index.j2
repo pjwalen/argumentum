@@ -14,7 +14,7 @@
                         <tbody>
                         {% for argument in arguments %}
                             <tr class="row">
-                                <td class="col-md-2"><a href="{{url_for('argument', argumentid=argument.id)}}">{{argument.title}}</a></td>
+                                <td class="col-md-2"><a href="{{url_for('argument_get', argumentid=argument.id)}}">{{argument.title}}</a></td>
                                 <td class="col-md-2">{{argument.left_opponent}}</td>
                                 <td class="col-md-2">{{argument.right_opponent}}</td>
                                 <td class="col-md-6">{{argument.description}}</td>
@@ -28,7 +28,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <form method="post" id="newArgument">
+                    <form method="post" action="{{ url_for('argument_post') }}" id="newArgument">
                         {{ argumentform.csrf_token }}
                         <input type="submit" style="display: none;">
                     </form>

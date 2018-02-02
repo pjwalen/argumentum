@@ -4,10 +4,7 @@
 {% macro premise_list(premises, premiseform, argument, opponent, even_odd='even') %}
         {% for premise in premises %}
             <div class="alert {% if even_odd == 'even' %}alert-primary{% else %}alert-warning{% endif %}">
-                <span class="float-right">
-                    <a href=""><span class="oi oi-pencil text-info"></span></a>
-                    <a href=""><span class="oi oi-x text-danger"></span></a>
-                </span>
+                <span class="oi oi-menu float-right"></span>
                 <p>
                     {{ premise.text }}
                 </p>
@@ -15,15 +12,25 @@
                     {%  for evidence in premise.evidence %}
                     <li>
                         {{ evidence.text }}
-                        <span class="float-right">
-                            <a href=""><span class="oi oi-pencil text-info"></span></a>
-                            <a href=""><span class="oi oi-x text-danger"></span></a>
-                        </span>
+                        <div class="float-right dropdown show">
+                            <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="oi oi-menu"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <form method="post" action="{{ url_for('evidence_post', argumentid=argument.id) }}">
+                                    {{ evidenceform.csrf_token }}
+                                    {{ evidenceform.act(value='delete') }}
+                                    {{ evidenceform.premiseid(value=premise.id) }}
+                                    <input class="dropdown-item" type="submit" value="Delete">
+                                </form>
+                            </div>
+                        </div>
                     </li>
                     {% endfor %}
                     <li>
-                        <form method="post">
+                        <form method="post" action="{{ url_for('evidence_post', argumentid=argument.id) }}">
                         {{ evidenceform.csrf_token }}
+                        {{ evidenceform.act(value='create') }}
                         {{ evidenceform.premiseid(value=premise.id) }}
                         {{ evidenceform.text(class_='form-control form-control-sm', style='display: inline-block;', placeholder="Add evidence") }}
                         </form>
@@ -35,7 +42,7 @@
                     {{ premise_list(premise.children, premiseform, argument, opponent) }}
                 {% endif %}
                 <div class="form-group">
-                    <form method="post">
+                    <form method="post" action="{{ url_for('premise_post', argumentid=argument.id) }}">
                         {{ premiseform.csrf_token }}
                         {{ premiseform.parent(value=premise.id) }}
                         {{ premiseform.opponent(value=opponent) }}
@@ -44,7 +51,6 @@
                     </form>
                 </div>
             </div>
-
         {% endfor %}
 {% endmacro %}
 
@@ -53,7 +59,7 @@
         <div class="col">
             <h2>{{ name }}</h2>
             {{ premise_list(premises, premiseform, argument, opponent) }}
-            <form method="post">
+            <form method="post" action="{{ url_for('premise_post', argumentid=argument.id) }}">
                 {{ premiseform.csrf_token }}
                 {{ premiseform.opponent(value=opponent) }}
                 {{ premiseform.text(class_='form-control mb-2 mr-sm-2', placeholder="Add a new premise") }}
