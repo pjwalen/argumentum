@@ -14,7 +14,7 @@ class Argument(db.Model):
     )
     right_premises = db.relationship(
         'Premise',
-        primaryjoin="and_(Premise.argumentid == Argument.id, Premise.opponent == 'right')",
+        primaryjoin="and_(Premise.argumentid == Argument.id, Premise.opponent == 'right', Premise.parent == None)",
         lazy=True
     )
     created = db.Column(db.DateTime)

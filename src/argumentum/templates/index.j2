@@ -21,15 +21,15 @@
                             </tr>
                         {% endfor %}
                         <tr class="row">
-                            <td class="col-md-2">{{ argumentform.title(class_="form-control mb-2 mr-sm-2", placeholder='Title', form='newArgument') }}</td>
-                            <td class="col-md-2">{{ argumentform.left_opponent(class_="form-control mb-2 mr-sm-2", placeholder='Left Opponent', form='newArgument') }}</td>
-                            <td class="col-md-2">{{ argumentform.right_opponent(class_="form-control mb-2 mr-sm-2", placeholder="Right Opponent", form='newArgument') }}</td>
-                            <td class="col-md-6">{{ argumentform.description(class_="form-control mb-2 mr-sm-2", placeholder="Description", form='newArgument') }}</td>
+                            <td class="col-md-2">{{ argumentcreateform.title(class_="form-control mb-2 mr-sm-2", placeholder='Title', form='newArgument') }}</td>
+                            <td class="col-md-2">{{ argumentcreateform.left_opponent(class_="form-control mb-2 mr-sm-2", placeholder='Left Opponent', form='newArgument') }}</td>
+                            <td class="col-md-2">{{ argumentcreateform.right_opponent(class_="form-control mb-2 mr-sm-2", placeholder="Right Opponent", form='newArgument') }}</td>
+                            <td class="col-md-6">{{ argumentcreateform.description(class_="form-control mb-2 mr-sm-2", placeholder="Description", form='newArgument') }}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <form method="post" action="{{ url_for('argument_post') }}" id="newArgument">
-                        {{ argumentform.csrf_token }}
+                    <form method="post" action="{{ url_for('argument_create') }}" id="newArgument">
+                        {{ argumentcreateform.csrf_token }}
                         <input type="submit" style="display: none;">
                     </form>
                 </div>

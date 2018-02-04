@@ -1,21 +1,36 @@
 import datetime
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, request
 from argumentum import app, db
 from argumentum.models import Argument, Premise, Evidence
-from argumentum.forms import ArgumentForm, PremiseForm, EvidenceForm
+from argumentum.forms import ArgumentCreateForm, PremiseCreateForm, EvidenceCreateForm, EvidenceDeleteForm
 
 
 @app.route('/')
 def index():
     # TODO: Add URL parameters for flagging invalid form fields.
-    argumentform = ArgumentForm()
+    argumentcreateform = ArgumentCreateForm()
     arguments = Argument.query.all()
-    return render_template('index.j2', arguments=arguments, argumentform=argumentform)
+    return render_template('index.j2', arguments=arguments, argumentcreateform=argumentcreateform)
+
+
+@app.route('/argument/<int:argumentid>')
+def argument_get(argumentid):
+    argument = Argument.query.filter_by(id=argumentid).first_or_404()
+    premisecreateform = PremiseCreateForm()
+    evidencecreateform = EvidenceCreateForm()
+    evidencedeleteform = EvidenceDeleteForm()
+    return render_template(
+        'argument.j2',
+        argument=argument,
+        premisecreateform=premisecreateform,
+        evidencecreateform=evidencecreateform,
+        evidencedeleteform=evidencedeleteform
+    )
 
 
 @app.route('/argument', methods=['POST'])
-def argument_post():
-    argumentform = ArgumentForm()
+def argument_create():
+    argumentform = ArgumentCreateForm()
     if argumentform.validate_on_submit():
         argument = Argument()
         argument.title = argumentform.title.data
@@ -26,20 +41,22 @@ def argument_post():
         argument.updated = datetime.datetime.now()
         db.session.add(argument)
         db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(request.referrer)
 
 
-@app.route('/argument/<int:argumentid>')
-def argument_get(argumentid):
-    argument = Argument.query.filter_by(id=argumentid).first_or_404()
-    premiseform = PremiseForm()
-    evidenceform = EvidenceForm()
-    return render_template('argument.j2', argument=argument, premiseform=premiseform, evidenceform=evidenceform)
+@app.route('/argument/update', methods=['POST'])
+def argument_update():
+    pass
 
 
-@app.route('/argument/<int:argumentid>/premise', methods=['POST'])
-def premise_post(argumentid):
-    premiseform = PremiseForm()
+@app.route('/argument/delete', methods=['POST'])
+def argument_delete():
+    pass
+
+
+@app.route('/premise', methods=['POST'])
+def premise_create():
+    premiseform = PremiseCreateForm()
     if premiseform.validate_on_submit():
         premise = Premise()
         premise.opponent = premiseform.opponent.data
@@ -48,21 +65,41 @@ def premise_post(argumentid):
         premise.text = premiseform.text.data
         db.session.add(premise)
         db.session.commit()
-    return redirect(url_for('argument_get', argumentid=argumentid))
+    return redirect(request.referrer)
 
 
-@app.route('/argument/<int:argumentid>/evidence', methods=['POST'])
-def evidence_post(argumentid):
-    evidenceform = EvidenceForm()
-    if evidenceform.validate_on_submit():
-        if evidenceform.act.data == 'create':
-            evidence = Evidence()
-            evidence.text = evidenceform.text.data
-            evidence.premiseid = evidenceform.premiseid.data
-            db.session.add(evidence)
-            db.session.commit()
-        elif evidenceform.act.data == 'delete':
-            evidence = Evidence.query.filter_by(id=evidenceform.premiseid.data).one()
-            db.session.delete(evidence)
-            db.session.commit()
-    return redirect(url_for('argument_get', argumentid=argumentid))
+@app.route('/premise/update', methods=['POST'])
+def premise_update():
+    pass
+
+
+@app.route('/premise/delete', methods=['POST'])
+def premise_delete(argumentid):
+    pass
+
+
+@app.route('/evidence', methods=['POST'])
+def evidence_create():
+    form = EvidenceCreateForm()
+    if form.validate_on_submit():
+        evidence = Evidence()
+        evidence.text = form.text.data
+        evidence.premiseid = form.premiseid.data
+        db.session.add(evidence)
+        db.session.commit()
+    return redirect(request.referrer)
+
+
+@app.route('/evidence/update', methods=['POST'])
+def evidence_update(evidenceid):
+    pass
+
+
+@app.route('/evidence/delete', methods=['POST'])
+def evidence_delete():
+    form = EvidenceDeleteForm()
+    if form.validate_on_submit():
+        evidence = Evidence.query.filter_by(id=form.evidenceid.data).first_or_404()
+        db.session.delete(evidence)
+        db.session.commit()
+    return redirect(request.referrer)
