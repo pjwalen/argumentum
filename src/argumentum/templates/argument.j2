@@ -4,7 +4,18 @@
 {% macro premise_list(premises, premiseform, argument, opponent, even_odd='even') %}
         {% for premise in premises %}
             <div class="alert {% if even_odd == 'even' %}alert-primary{% else %}alert-warning{% endif %}">
-                <span class="oi oi-menu float-right"></span>
+                <div class="float-right dropdown show">
+                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="oi oi-menu"></span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <form method="post" action="{{ url_for('premise_delete') }}">
+                            {{ premisedeleteform.csrf_token }}
+                            {{ premisedeleteform.premiseid(value=premise.id) }}
+                            <input class="dropdown-item" type="submit" value="Delete">
+                        </form>
+                    </div>
+                </div>
                 <p>
                     {{ premise.text }}
                 </p>

@@ -18,6 +18,10 @@ class PremiseCreateForm(FlaskForm):
     text = StringField('Text', validators=[DataRequired()])
 
 
+class PremiseDeleteForm(FlaskForm):
+    premiseid = IntegerField('Premise ID', validators=[DataRequired()], widget=HiddenInput())
+
+
 class EvidenceCreateForm(FlaskForm):
     premiseid = IntegerField('Premise ID', validators=[DataRequired()], widget=HiddenInput())
     text = StringField('Text')

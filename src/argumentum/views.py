@@ -2,7 +2,7 @@ import datetime
 from flask import render_template, redirect, request
 from argumentum import app, db
 from argumentum.models import Argument, Premise, Evidence
-from argumentum.forms import ArgumentCreateForm, PremiseCreateForm, EvidenceCreateForm, EvidenceDeleteForm
+from argumentum.forms import ArgumentCreateForm, PremiseCreateForm, PremiseDeleteForm, EvidenceCreateForm, EvidenceDeleteForm
 
 
 @app.route('/')
@@ -17,12 +17,14 @@ def index():
 def argument_get(argumentid):
     argument = Argument.query.filter_by(id=argumentid).first_or_404()
     premisecreateform = PremiseCreateForm()
+    premisedeleteform = PremiseDeleteForm()
     evidencecreateform = EvidenceCreateForm()
     evidencedeleteform = EvidenceDeleteForm()
     return render_template(
         'argument.j2',
         argument=argument,
         premisecreateform=premisecreateform,
+        premisedeleteform=premisedeleteform,
         evidencecreateform=evidencecreateform,
         evidencedeleteform=evidencedeleteform
     )
@@ -74,8 +76,13 @@ def premise_update():
 
 
 @app.route('/premise/delete', methods=['POST'])
-def premise_delete(argumentid):
-    pass
+def premise_delete():
+    form = PremiseDeleteForm()
+    if form.validate_on_submit():
+        premise = Premise.query.filter_by(id=form.premiseid.data).first_or_404()
+        db.session.delete(premise)
+        db.session.commit()
+    return redirect(request.referrer)
 
 
 @app.route('/evidence', methods=['POST'])
@@ -91,7 +98,7 @@ def evidence_create():
 
 
 @app.route('/evidence/update', methods=['POST'])
-def evidence_update(evidenceid):
+def evidence_update():
     pass
 
 
