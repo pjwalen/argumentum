@@ -10,7 +10,7 @@ def index():
     # TODO: Add URL parameters for flagging invalid form fields.
     argumentcreateform = ArgumentCreateForm()
     arguments = Argument.query.all()
-    return render_template('index.j2', arguments=arguments, argumentcreateform=argumentcreateform)
+    return render_template('index.jinja2', arguments=arguments, argumentcreateform=argumentcreateform)
 
 
 @app.route('/argument/<int:argumentid>')
@@ -21,7 +21,7 @@ def argument_get(argumentid):
     evidencecreateform = EvidenceCreateForm()
     evidencedeleteform = EvidenceDeleteForm()
     return render_template(
-        'argument.j2',
+        'argument.jinja2',
         argument=argument,
         premisecreateform=premisecreateform,
         premisedeleteform=premisedeleteform,
