@@ -7,7 +7,7 @@ setup(
     packages=['argumentum'],
     include_package_date=True,
     install_requires=['Flask>=0.12.2', 'Flask-SQLAlchemy>=2.3.2', 'Flask-WTF>=0.14.2'],
-    scripts=['src/run_development_server.py'],
+    scripts=['src/run_development_server.py', 'src/application.py'],
     url='https://github.com/pjwalen/argumentum',
     license='',
     author='Patrick Walentiny',
