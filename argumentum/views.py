@@ -2,8 +2,8 @@ import datetime
 from flask import render_template, redirect, request
 from argumentum import application, db
 from argumentum.models import Argument, Premise, Evidence
-from argumentum.forms import ArgumentCreateForm, ArgumentDeleteForm, PremiseCreateForm, PremiseDeleteForm, \
-    EvidenceCreateForm, EvidenceDeleteForm
+from argumentum.forms import ArgumentCreateForm, ArgumentDeleteForm, ArgumentUpdateForm, PremiseCreateForm, \
+    PremiseDeleteForm, PremiseUpdateForm, EvidenceCreateForm, EvidenceUpdateForm, EvidenceDeleteForm
 
 
 @application.route('/')
@@ -49,7 +49,13 @@ def argument_create():
 
 @application.route('/argument/update', methods=['POST'])
 def argument_update():
-    pass
+    argumentform = ArgumentUpdateForm()
+    if argumentform.validate_on_submit():
+        argument = Argument.query.filter_by(id=argumentform.argumentid.data).first_or_404()
+        argument.title = argumentform.title.data
+        argument.description = argumentform.description.data
+        db.session.commit()
+    return redirect(request.referrer)
 
 
 @application.route('/argument/delete', methods=['POST'])
@@ -78,7 +84,12 @@ def premise_create():
 
 @application.route('/premise/update', methods=['POST'])
 def premise_update():
-    pass
+    premiseform = PremiseUpdateForm()
+    if premiseform.validate_on_submit():
+        premise = Premise.query.filter_by(id=premiseform.premiseid.data).first_or_404()
+        premise.text = premiseform.text.data
+        db.session.commit()
+    return redirect(request.referrer)
 
 
 @application.route('/premise/delete', methods=['POST'])
@@ -105,7 +116,12 @@ def evidence_create():
 
 @application.route('/evidence/update', methods=['POST'])
 def evidence_update():
-    pass
+    evidenceform = EvidenceUpdateForm()
+    if evidenceform.validate_on_submit():
+        evidence = Evidence.query.filter_by(id=evidenceform.evidenceid.data).first_or_404()
+        evidence.text = evidenceform.text.data
+        db.session.commit()
+    return redirect(request.referrer)
 
 
 @application.route('/evidence/delete', methods=['POST'])

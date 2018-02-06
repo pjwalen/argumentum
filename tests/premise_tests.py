@@ -8,8 +8,8 @@ class PremiseTests(unittest.TestCase):
     def setUp(self):
         db.create_all()
         self.argumentid = create_argument()
-        premiseid = create_premise(argumentid=self.argumentid)
-        create_evidence(premiseid=premiseid)
+        self.premiseid = create_premise(argumentid=self.argumentid)
+        create_evidence(premiseid=self.premiseid)
         application.config['WTF_CSRF_ENABLED'] = False
         self.app = application.test_client()
 
@@ -43,9 +43,9 @@ class PremiseTests(unittest.TestCase):
         self.app.post(
             '/premise/update',
             data=dict(
-                argumentid=self.premiseid,
+                premiseid=self.premiseid,
                 text=new_text
             )
         )
-        premise = Premise.query.filter(id=self.premiseid).one()
+        premise = Premise.query.get(self.premiseid)
         self.assertEqual(new_text, premise.text)

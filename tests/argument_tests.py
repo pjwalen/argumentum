@@ -51,6 +51,6 @@ class ArgumentumTests(unittest.TestCase):
                 description=new_description
             )
         )
-        argument = Argument.query.filter(id=self.argumentid).one()
+        argument = Argument.query.get(self.argumentid)
         self.assertEqual(new_title, argument.title)
         self.assertEqual(new_description, argument.description)

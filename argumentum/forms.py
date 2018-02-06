@@ -15,6 +15,12 @@ class ArgumentDeleteForm(FlaskForm):
     argumentid = IntegerField('Argument ID', validators=[DataRequired()])
 
 
+class ArgumentUpdateForm(FlaskForm):
+    argumentid = IntegerField('Argument ID', validators=[DataRequired()])
+    title = StringField('Argument Text', validators=[DataRequired()])
+    description = StringField('Argument Text', validators=[DataRequired()])
+
+
 class PremiseCreateForm(FlaskForm):
     argumentid = IntegerField('Argument ID', validators=[DataRequired()], widget=HiddenInput())
     opponent = StringField('Opponent', validators=[DataRequired(), AnyOf(['left', 'right'])], widget=HiddenInput())
@@ -26,9 +32,19 @@ class PremiseDeleteForm(FlaskForm):
     premiseid = IntegerField('Premise ID', validators=[DataRequired()], widget=HiddenInput())
 
 
+class PremiseUpdateForm(FlaskForm):
+    premiseid = IntegerField('Premise ID', validators=[DataRequired()], widget=HiddenInput())
+    text = StringField('Premise Text', validators=[DataRequired()], widget=HiddenInput())
+
+
 class EvidenceCreateForm(FlaskForm):
     premiseid = IntegerField('Premise ID', validators=[DataRequired()], widget=HiddenInput())
-    text = StringField('Text')
+    text = StringField('Text', validators=[DataRequired()])
+
+
+class EvidenceUpdateForm(FlaskForm):
+    evidenceid = IntegerField('Evidence ID', validators=[DataRequired()], widget=HiddenInput())
+    text = StringField('Text', validators=[DataRequired()])
 
 
 class EvidenceDeleteForm(FlaskForm):

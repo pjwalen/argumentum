@@ -40,9 +40,9 @@ class EvidenceTests(unittest.TestCase):
         self.app.post(
             '/evidence/update',
             data=dict(
-                argumentid=self.evidenceid,
+                evidenceid=self.evidenceid,
                 text=new_text
             )
         )
-        evidence = Evidence.query.filter(id=self.evidenceid).one()
+        evidence = Evidence.query.get(self.evidenceid)
         self.assertEqual(new_text, evidence.text)

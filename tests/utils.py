@@ -32,7 +32,7 @@ def create_evidence(premiseid=1,
 
 
 def create_premise(argumentid=1,
-                   text='This is evidence'):
+                   text='This is a premise'):
     premise = Premise()
     premise.argumentid = argumentid
     premise.text = text
