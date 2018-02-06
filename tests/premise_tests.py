@@ -39,4 +39,13 @@ class PremiseTests(unittest.TestCase):
         self.assertEqual(Premise.query.count(), 0)
 
     def test_premise_update(self):
-        raise AssertionError('Code not complete')
+        new_text = 'New premise text'
+        self.app.post(
+            '/premise/update',
+            data=dict(
+                argumentid=self.premiseid,
+                text=new_text
+            )
+        )
+        premise = Premise.query.filter(id=self.premiseid).one()
+        self.assertEqual(new_text, premise.text)

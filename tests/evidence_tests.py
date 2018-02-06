@@ -36,4 +36,13 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(Evidence.query.count(), 0)
 
     def test_evidence_update(self):
-        raise AssertionError('Code not complete')
+        new_text = 'New evidence text'
+        self.app.post(
+            '/evidence/update',
+            data=dict(
+                argumentid=self.evidenceid,
+                text=new_text
+            )
+        )
+        evidence = Evidence.query.filter(id=self.evidenceid).one()
+        self.assertEqual(new_text, evidence.text)
