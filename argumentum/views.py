@@ -2,7 +2,8 @@ import datetime
 from flask import render_template, redirect, request
 from argumentum import application, db
 from argumentum.models import Argument, Premise, Evidence
-from argumentum.forms import ArgumentCreateForm, PremiseCreateForm, PremiseDeleteForm, EvidenceCreateForm, EvidenceDeleteForm
+from argumentum.forms import ArgumentCreateForm, ArgumentDeleteForm, PremiseCreateForm, PremiseDeleteForm, \
+    EvidenceCreateForm, EvidenceDeleteForm
 
 
 @application.route('/')
@@ -53,7 +54,12 @@ def argument_update():
 
 @application.route('/argument/delete', methods=['POST'])
 def argument_delete():
-    pass
+    argumentform = ArgumentDeleteForm()
+    if argumentform.validate_on_submit():
+        argument = Argument.query.filter_by(id=argumentform.argumentid.data).first_or_404()
+        db.session.delete(argument)
+        db.session.commit()
+    return redirect(request.referrer)
 
 
 @application.route('/premise', methods=['POST'])
