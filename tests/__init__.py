@@ -1,5 +1,5 @@
 import unittest
-from argumentum import app, db
+from argumentum import application, db
 
 
 class ArgumentumTests(unittest.TestCase):

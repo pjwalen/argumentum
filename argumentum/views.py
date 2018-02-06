@@ -1,11 +1,11 @@
 import datetime
 from flask import render_template, redirect, request
-from argumentum import app, db
+from argumentum import application, db
 from argumentum.models import Argument, Premise, Evidence
 from argumentum.forms import ArgumentCreateForm, PremiseCreateForm, PremiseDeleteForm, EvidenceCreateForm, EvidenceDeleteForm
 
 
-@app.route('/')
+@application.route('/')
 def index():
     # TODO: Add URL parameters for flagging invalid form fields.
     argumentcreateform = ArgumentCreateForm()
@@ -13,7 +13,7 @@ def index():
     return render_template('index.jinja2', arguments=arguments, argumentcreateform=argumentcreateform)
 
 
-@app.route('/argument/<int:argumentid>')
+@application.route('/argument/<int:argumentid>')
 def argument_get(argumentid):
     argument = Argument.query.filter_by(id=argumentid).first_or_404()
     premisecreateform = PremiseCreateForm()
@@ -30,7 +30,7 @@ def argument_get(argumentid):
     )
 
 
-@app.route('/argument', methods=['POST'])
+@application.route('/argument', methods=['POST'])
 def argument_create():
     argumentform = ArgumentCreateForm()
     if argumentform.validate_on_submit():
@@ -46,17 +46,17 @@ def argument_create():
     return redirect(request.referrer)
 
 
-@app.route('/argument/update', methods=['POST'])
+@application.route('/argument/update', methods=['POST'])
 def argument_update():
     pass
 
 
-@app.route('/argument/delete', methods=['POST'])
+@application.route('/argument/delete', methods=['POST'])
 def argument_delete():
     pass
 
 
-@app.route('/premise', methods=['POST'])
+@application.route('/premise', methods=['POST'])
 def premise_create():
     premiseform = PremiseCreateForm()
     if premiseform.validate_on_submit():
@@ -70,12 +70,12 @@ def premise_create():
     return redirect(request.referrer)
 
 
-@app.route('/premise/update', methods=['POST'])
+@application.route('/premise/update', methods=['POST'])
 def premise_update():
     pass
 
 
-@app.route('/premise/delete', methods=['POST'])
+@application.route('/premise/delete', methods=['POST'])
 def premise_delete():
     form = PremiseDeleteForm()
     if form.validate_on_submit():
@@ -85,7 +85,7 @@ def premise_delete():
     return redirect(request.referrer)
 
 
-@app.route('/evidence', methods=['POST'])
+@application.route('/evidence', methods=['POST'])
 def evidence_create():
     form = EvidenceCreateForm()
     if form.validate_on_submit():
@@ -97,12 +97,12 @@ def evidence_create():
     return redirect(request.referrer)
 
 
-@app.route('/evidence/update', methods=['POST'])
+@application.route('/evidence/update', methods=['POST'])
 def evidence_update():
     pass
 
 
-@app.route('/evidence/delete', methods=['POST'])
+@application.route('/evidence/delete', methods=['POST'])
 def evidence_delete():
     form = EvidenceDeleteForm()
     if form.validate_on_submit():

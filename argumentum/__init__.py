@@ -15,13 +15,13 @@ class default_settings(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-app = Flask(__name__)
-app.secret_key = os.urandom(24)
-app.config.from_object('argumentum.default_settings')
-db = SQLAlchemy(app)
+application = Flask(__name__)
+application.secret_key = os.urandom(24)
+application.config.from_object('argumentum.default_settings')
+db = SQLAlchemy(application)
 
 
-@app.before_first_request
+@application.before_first_request
 def createdb():
     db.create_all()
 
