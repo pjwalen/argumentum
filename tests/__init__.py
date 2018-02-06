@@ -1,3 +1,3 @@
-from .argument_tests import *
-from .evidence_tests import *
-from .premise_tests import *
+from tests.argument_tests import *
+from tests.evidence_tests import *
+from tests.premise_tests import *
