@@ -57,6 +57,7 @@
                         {{ premisecreateform.opponent(value=opponent) }}
                         {{ premisecreateform.argumentid(value=argument.id) }}
                         {{ premisecreateform.text(class_='form-control', placeholder="Add a new premise") }}
+                        <input type="submit" class="btn btn-primary">
                     </form>
                 </div>
             </div>
@@ -72,6 +73,7 @@
                 {{ premisecreateform.csrf_token }}
                 {{ premisecreateform.opponent(value=opponent) }}
                 {{ premisecreateform.text(class_='form-control mb-2 mr-sm-2', placeholder="Add a new premise") }}
+                <input type="submit" class="btn btn-primary">
                 {{ premisecreateform.argumentid(value=argument.id) }}
             </form>
         </div>
