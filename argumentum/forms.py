@@ -12,7 +12,7 @@ class ArgumentCreateForm(FlaskForm):
 
 
 class ArgumentDeleteForm(FlaskForm):
-    argumentid = IntegerField('Argument ID', validators=[DataRequired()])
+    argumentid = IntegerField('Argument ID', validators=[DataRequired()], widget=HiddenInput())
 
 
 class ArgumentUpdateForm(FlaskForm):

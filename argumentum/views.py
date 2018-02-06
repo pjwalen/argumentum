@@ -10,8 +10,14 @@ from argumentum.forms import ArgumentCreateForm, ArgumentDeleteForm, ArgumentUpd
 def index():
     # TODO: Add URL parameters for flagging invalid form fields.
     argumentcreateform = ArgumentCreateForm()
+    argumentdeleteform = ArgumentDeleteForm()
     arguments = Argument.query.all()
-    return render_template('index.jinja2', arguments=arguments, argumentcreateform=argumentcreateform)
+    return render_template(
+        'index.jinja2',
+        arguments=arguments,
+        argumentcreateform=argumentcreateform,
+        argumentdeleteform=argumentdeleteform
+    )
 
 
 @application.route('/argument/<int:argumentid>')
