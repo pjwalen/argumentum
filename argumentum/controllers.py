@@ -13,7 +13,7 @@ def index():
     argumentdeleteform = ArgumentDeleteForm()
     arguments = Argument.query.all()
     return render_template(
-        'index.jinja2',
+        'index.html',
         arguments=arguments,
         argumentcreateform=argumentcreateform,
         argumentdeleteform=argumentdeleteform
@@ -28,7 +28,7 @@ def argument_get(argumentid):
     evidencecreateform = EvidenceCreateForm()
     evidencedeleteform = EvidenceDeleteForm()
     return render_template(
-        'argument.jinja2',
+        'argument.html',
         argument=argument,
         premisecreateform=premisecreateform,
         premisedeleteform=premisedeleteform,

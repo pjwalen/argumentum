@@ -20,10 +20,12 @@ application.secret_key = os.urandom(24)
 application.config.from_object('argumentum.default_settings')
 db = SQLAlchemy(application)
 
+from argumentum.controllers import *
+from argumentum.utils import create_demo_data
+
 
 @application.before_first_request
 def createdb():
     db.create_all()
-
-
-from argumentum.views import *
+    if Argument.query.count() == 0:
+        create_demo_data()
