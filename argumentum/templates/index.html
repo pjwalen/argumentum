@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from 'argument_macros.html' import update_argument, show_argument %}
 {% block content %}
             <div class="row">
                 <div class="col">
@@ -29,24 +30,11 @@
             {% for argument in arguments %}
             <div class="row">
                 <div class="col">
-                    <div class="alert alert-primary">
-                        <div class="float-right dropdown show">
-                            <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="oi oi-menu"></span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <form method="post" action="{{ url_for('argument_delete') }}">
-                                    {{ argumentdeleteform.csrf_token }}
-                                    {{ argumentdeleteform.argumentid(value=argument.id) }}
-                                    <input class="dropdown-item" type="submit" value="Delete">
-                                </form>
-                            </div>
-                        </div>
-                        <h2><a href="{{ url_for('argument_get', argumentid=argument.id) }}">{{ argument.title }}</a></h2>
-                        <b><p>{{ argument.left_opponent }} & {{ argument.right_opponent }}</p></b>
-                        <p>{{ argument.description }}</p>
-                        <p>Created: {{ argument.created }}<br />Updated: {{ argument.updated }}</p>
-                    </div>
+                    {%  if argument.id == update_argument_id %}
+                        {{ update_argument(argument, argumentupdateform) }}
+                    {% else %}
+                        {{ show_argument(argument, argumentdeleteform) }}
+                    {%  endif %}
                 </div>
             </div>
             {% endfor %}

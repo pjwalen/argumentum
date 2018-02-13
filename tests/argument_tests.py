@@ -1,3 +1,4 @@
+import datetime
 import unittest
 from argumentum import application, db
 from argumentum.models import Argument, Premise, Evidence
@@ -43,14 +44,22 @@ class ArgumentumTests(unittest.TestCase):
     def test_argument_update(self):
         new_title = 'New argument title'
         new_description = 'This is the new description.'
+        new_left_opponent = 'New Left'
+        new_right_opponent = 'New Right'
+        old_updated_datetime = Argument.query.get(self.argumentid).updated
         self.app.post(
             '/argument/update',
             data=dict(
                 argumentid=self.argumentid,
                 title=new_title,
-                description=new_description
+                description=new_description,
+                left_opponent=new_left_opponent,
+                right_opponent=new_right_opponent
             )
         )
         argument = Argument.query.get(self.argumentid)
         self.assertEqual(new_title, argument.title)
         self.assertEqual(new_description, argument.description)
+        self.assertEqual(new_left_opponent, argument.left_opponent)
+        self.assertEqual(new_right_opponent, argument.right_opponent)
+        self.assertGreater(argument.updated, old_updated_datetime)

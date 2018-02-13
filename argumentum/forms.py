@@ -16,9 +16,11 @@ class ArgumentDeleteForm(FlaskForm):
 
 
 class ArgumentUpdateForm(FlaskForm):
-    argumentid = IntegerField('Argument ID', validators=[DataRequired()])
+    argumentid = IntegerField('Argument ID', validators=[DataRequired()], widget=HiddenInput())
     title = StringField('Argument Text', validators=[DataRequired()])
-    description = StringField('Argument Text', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    left_opponent = StringField('Left Opponent', validators=[DataRequired()])
+    right_opponent = StringField('Right Opponent', validators=[DataRequired()])
 
 
 class PremiseCreateForm(FlaskForm):

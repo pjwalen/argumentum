@@ -4,6 +4,7 @@ from argumentum.models import Argument, Premise, Evidence
 
 
 def create_demo_data():
+    # Define an argument.
     argument = Argument(
         title='My first argument',
         left_opponent='Patrick Walentiny',
@@ -14,6 +15,8 @@ def create_demo_data():
     )
     db.session.add(argument)
     db.session.commit()
+
+    # Define premises.
     left_premise = Premise(
         argumentid=argument.id,
         opponent='left',
@@ -31,6 +34,8 @@ def create_demo_data():
     db.session.add(left_premise)
     db.session.add(right_premise)
     db.session.commit()
+
+    # Define a sub-premise under the left-top premise.
     sub_premise = Premise(
         argumentid=argument.id,
         parent=left_premise.id,
@@ -40,6 +45,8 @@ def create_demo_data():
     )
     db.session.add(sub_premise)
     db.session.commit()
+
+    # Add evidence to each premise.
     left_evidence = Evidence(
         premiseid=left_premise.id,
         text='This is some evidence',

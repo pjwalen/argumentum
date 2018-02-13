@@ -1,4 +1,5 @@
 import datetime
+from urllib.parse import urlparse
 from flask import render_template, redirect, request
 from argumentum import application, db
 from argumentum.models import Argument, Premise, Evidence
@@ -10,13 +11,17 @@ from argumentum.forms import ArgumentCreateForm, ArgumentDeleteForm, ArgumentUpd
 def index():
     # TODO: Add URL parameters for flagging invalid form fields.
     argumentcreateform = ArgumentCreateForm()
+    argumentupdateform = ArgumentUpdateForm()
     argumentdeleteform = ArgumentDeleteForm()
     arguments = Argument.query.all()
+    update_argument_id = request.args.get('update_argument_id', type=int)
     return render_template(
         'index.html',
         arguments=arguments,
         argumentcreateform=argumentcreateform,
-        argumentdeleteform=argumentdeleteform
+        argumentupdateform=argumentupdateform,
+        argumentdeleteform=argumentdeleteform,
+        update_argument_id=update_argument_id
     )
 
 
@@ -56,12 +61,16 @@ def argument_create():
 @application.route('/argument/update', methods=['POST'])
 def argument_update():
     argumentform = ArgumentUpdateForm()
+
     if argumentform.validate_on_submit():
         argument = Argument.query.filter_by(id=argumentform.argumentid.data).first_or_404()
         argument.title = argumentform.title.data
         argument.description = argumentform.description.data
+        argument.left_opponent = argumentform.left_opponent.data
+        argument.right_opponent = argumentform.right_opponent.data
+        argument.updated = datetime.datetime.now()
         db.session.commit()
-    return redirect(request.referrer)
+    return redirect(urlparse(request.referrer).path)
 
 
 @application.route('/argument/delete', methods=['POST'])
