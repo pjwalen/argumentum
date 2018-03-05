@@ -1,0 +1,45 @@
+{% macro create_evidence(premise, evidencecreateform) %}
+                        <form method="post" action="{{ url_for('evidence_create') }}">
+                        {{ evidencecreateform.csrf_token }}
+                        {{ evidencecreateform.premiseid(value=premise.id) }}
+                        {{ evidencecreateform.text(class_='form-control form-control-sm', style='display: inline-block;', placeholder="Add evidence") }}
+                        </form>
+{% endmacro %}
+
+
+{% macro update_evidence(premises, premiseform, argument, opponent, even_odd='even') %}
+
+{% endmacro %}
+
+
+{% macro delete_evidence(evidence, evidencedeleteform) %}
+                                <form method="post" action="{{ url_for('evidence_delete') }}">
+                                    {{ evidencedeleteform.csrf_token }}
+                                    {{ evidencedeleteform.evidenceid(value=evidence.id) }}
+                                    <input class="dropdown-item" type="submit" value="Delete">
+                                </form>
+{% endmacro %}
+
+
+{% macro show_evidence(premise, evidencedeleteform, evidencecreateform, create_evidence_id) %}
+                <ul>
+                    {% for evidence in premise.evidence %}
+                        <li>
+                            {{ evidence.text }}
+                            <div class="float-right dropdown show">
+                                <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="oi oi-menu"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    {{ delete_evidence(evidence, evidencedeleteform) }}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    {% if create_evidence_id == premise.id %}
+                        <li>
+                            {{ create_evidence(premise, evidencecreateform) }}
+                        </li>
+                    {% endif %}
+                </ul>
+{% endmacro %}

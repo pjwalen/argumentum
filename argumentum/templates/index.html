@@ -1,32 +1,44 @@
 {% extends "base.html" %}
 {% from 'argument_macros.html' import update_argument, show_argument %}
 {% block content %}
-            <div class="row">
-                <div class="col">
-                    <div class="alert alert-primary">
-                        <form method="post" action="{{ url_for('argument_create') }}">
-                            <div class="form-group" style="margin-top: 1rem;">
-                                {{ argumentcreateform.title(placeholder='Title', class='form-control') }}
+            <script>
+                var argumentcreateformstr = `
+                    <div class="row">
+                        <div class="col">
+                            <div class="alert alert-primary">
+                                <form method="post" action="{{ url_for('argument_create') }}">
+                                    <div class="form-group" style="margin-top: 1rem;">
+                                        {{ argumentcreateform.title(placeholder='Title', class='form-control') }}
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            {{ argumentcreateform.left_opponent(placeholder='Left Opponent', class='form-control') }}
+                                            <span class="input-group-text">&</span>
+                                            {{ argumentcreateform.right_opponent(placeholder='Right Opponent', class='form-control') }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{ argumentcreateform.description(placeholder='Description', class='form-control') }}
+                                        {{ argumentcreateform.csrf_token }}
+                                        <input type="submit" style="display: none;">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary">
+                                        <button class="btn btn-secondary">Cancel</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    {{ argumentcreateform.left_opponent(placeholder='Left Opponent', class='form-control') }}
-                                    <span class="input-group-text">&</span>
-                                    {{ argumentcreateform.right_opponent(placeholder='Right Opponent', class='form-control') }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {{ argumentcreateform.description(placeholder='Description', class='form-control') }}
-                                {{ argumentcreateform.csrf_token }}
-                                <input type="submit" style="display: none;">
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-primary">
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
-            </div>
+                `;
+                argumentcreateform = $.parseHTML(argumentcreateformstr);
+                $(document).ready(function() {
+                    $('#newArgumentButton').click(function() {
+                        $(argumentcreateformstr).insertBefore('#newArgumentButton');
+                        $('#newArgumentButton').hide();
+                    });
+                });
+            </script>
             {% for argument in arguments %}
             <div class="row">
                 <div class="col">
@@ -38,4 +50,7 @@
                 </div>
             </div>
             {% endfor %}
+            {% if not update_argument_id %}
+            <button class="btn btn-primary" id="newArgumentButton">New Argument</button>
+            {% endif %}
 {% endblock %}

@@ -1,84 +1,5 @@
 {% extends "base.html" %}
-
-
-{% macro premise_list(premises, premiseform, argument, opponent, even_odd='even') %}
-        {% for premise in premises %}
-            <div class="alert {% if even_odd == 'even' %}alert-primary{% else %}alert-warning{% endif %}">
-                <div class="float-right dropdown show">
-                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="oi oi-menu"></span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <form method="post" action="{{ url_for('premise_delete') }}">
-                            {{ premisedeleteform.csrf_token }}
-                            {{ premisedeleteform.premiseid(value=premise.id) }}
-                            <input class="dropdown-item" type="submit" value="Delete">
-                        </form>
-                    </div>
-                </div>
-                <p>
-                    {{ premise.text }}
-                </p>
-                <ul>
-                    {%  for evidence in premise.evidence %}
-                    <li>
-                        {{ evidence.text }}
-                        <div class="float-right dropdown show">
-                            <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="oi oi-menu"></span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <form method="post" action="{{ url_for('evidence_delete') }}">
-                                    {{ evidencedeleteform.csrf_token }}
-                                    {{ evidencedeleteform.evidenceid(value=evidence.id) }}
-                                    <input class="dropdown-item" type="submit" value="Delete">
-                                </form>
-                            </div>
-                        </div>
-                    </li>
-                    {% endfor %}
-                    <li>
-                        <form method="post" action="{{ url_for('evidence_create') }}">
-                        {{ evidencecreateform.csrf_token }}
-                        {{ evidencecreateform.premiseid(value=premise.id) }}
-                        {{ evidencecreateform.text(class_='form-control form-control-sm', style='display: inline-block;', placeholder="Add evidence") }}
-                        </form>
-                    </li>
-                </ul>
-                {% if even_odd == 'even' %}
-                    {{ premise_list(premise.children, premisecreateform, argument, opponent, even_odd='odd') }}
-                {% else %}
-                    {{ premise_list(premise.children, premisecreateform, argument, opponent) }}
-                {% endif %}
-                <div class="form-group">
-                    <form method="post" action="{{ url_for('premise_create') }}">
-                        {{ premisecreateform.csrf_token }}
-                        {{ premisecreateform.parent(value=premise.id) }}
-                        {{ premisecreateform.opponent(value=opponent) }}
-                        {{ premisecreateform.argumentid(value=argument.id) }}
-                        {{ premisecreateform.text(class_='form-control', placeholder="Add a new premise") }}
-                        <input type="submit" class="btn btn-primary">
-                    </form>
-                </div>
-            </div>
-        {% endfor %}
-{% endmacro %}
-
-
-{%  macro argument_list(name, premises, premisecreateform, argument, opponent) %}
-        <div class="col">
-            <h2>{{ name }}</h2>
-            {{ premise_list(premises, premisecreateform, argument, opponent) }}
-            <form method="post" action="{{ url_for('premise_create') }}">
-                {{ premisecreateform.csrf_token }}
-                {{ premisecreateform.opponent(value=opponent) }}
-                {{ premisecreateform.text(class_='form-control mb-2 mr-sm-2', placeholder="Add a new premise") }}
-                <input type="submit" class="btn btn-primary">
-                {{ premisecreateform.argumentid(value=argument.id) }}
-            </form>
-        </div>
-{%  endmacro %}
-
+{% from 'premise_macros.html' import create_premise, update_premise, show_premise, delete_premise %}
 
 {% block content %}
     <div class="row">
@@ -88,7 +9,13 @@
         </div>
     </div>
     <div class="row">
-        {{ argument_list(argument.left_opponent, argument.left_premises, premisecreateform, argument, 'left') }}
-        {{ argument_list(argument.right_opponent, argument.right_premises, premisecreateform, argument, 'right') }}
+        <div class="col">
+            {{ show_premise(argument.left_premises, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, 'left', create_premise_id, create_evidence_id) }}
+            {{ create_premise(argument.id, premisecreateform, 'left') }}
+        </div>
+        <div class="col">
+            {{ show_premise(argument.right_premises, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, 'right', create_premise_id, create_evidence_id) }}
+            {{ create_premise(argument.id, premisecreateform, 'right') }}
+        </div>
     </div>
 {% endblock %}

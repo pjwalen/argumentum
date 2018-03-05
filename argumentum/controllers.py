@@ -32,13 +32,17 @@ def argument_get(argumentid):
     premisedeleteform = PremiseDeleteForm()
     evidencecreateform = EvidenceCreateForm()
     evidencedeleteform = EvidenceDeleteForm()
+    create_premise_id = request.args.get('create_premise_id', type=int)
+    create_evidence_id = request.args.get('create_evidence_id', type=int)
     return render_template(
         'argument.html',
         argument=argument,
         premisecreateform=premisecreateform,
         premisedeleteform=premisedeleteform,
         evidencecreateform=evidencecreateform,
-        evidencedeleteform=evidencedeleteform
+        evidencedeleteform=evidencedeleteform,
+        create_premise_id=create_premise_id,
+        create_evidence_id=create_evidence_id
     )
 
 
@@ -55,7 +59,7 @@ def argument_create():
         argument.updated = datetime.datetime.now()
         db.session.add(argument)
         db.session.commit()
-    return redirect(request.referrer)
+    return redirect(urlparse(request.referrer).path)
 
 
 @application.route('/argument/update', methods=['POST'])
@@ -80,7 +84,7 @@ def argument_delete():
         argument = Argument.query.filter_by(id=argumentform.argumentid.data).first_or_404()
         db.session.delete(argument)
         db.session.commit()
-    return redirect(request.referrer)
+    return redirect(urlparse(request.referrer).path)
 
 
 @application.route('/premise', methods=['POST'])
@@ -94,7 +98,7 @@ def premise_create():
         premise.text = premiseform.text.data
         db.session.add(premise)
         db.session.commit()
-    return redirect(request.referrer)
+    return redirect(urlparse(request.referrer).path)
 
 
 @application.route('/premise/update', methods=['POST'])
@@ -104,7 +108,7 @@ def premise_update():
         premise = Premise.query.filter_by(id=premiseform.premiseid.data).first_or_404()
         premise.text = premiseform.text.data
         db.session.commit()
-    return redirect(request.referrer)
+    return redirect(urlparse(request.referrer).path)
 
 
 @application.route('/premise/delete', methods=['POST'])
@@ -114,7 +118,7 @@ def premise_delete():
         premise = Premise.query.filter_by(id=form.premiseid.data).first_or_404()
         db.session.delete(premise)
         db.session.commit()
-    return redirect(request.referrer)
+    return redirect(urlparse(request.referrer).path)
 
 
 @application.route('/evidence', methods=['POST'])
@@ -126,7 +130,7 @@ def evidence_create():
         evidence.premiseid = form.premiseid.data
         db.session.add(evidence)
         db.session.commit()
-    return redirect(request.referrer)
+    return redirect(urlparse(request.referrer).path)
 
 
 @application.route('/evidence/update', methods=['POST'])
@@ -136,7 +140,7 @@ def evidence_update():
         evidence = Evidence.query.filter_by(id=evidenceform.evidenceid.data).first_or_404()
         evidence.text = evidenceform.text.data
         db.session.commit()
-    return redirect(request.referrer)
+    return redirect(urlparse(request.referrer).path)
 
 
 @application.route('/evidence/delete', methods=['POST'])
@@ -146,4 +150,4 @@ def evidence_delete():
         evidence = Evidence.query.filter_by(id=form.evidenceid.data).first_or_404()
         db.session.delete(evidence)
         db.session.commit()
-    return redirect(request.referrer)
+    return redirect(urlparse(request.referrer).path)

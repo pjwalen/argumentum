@@ -1,0 +1,56 @@
+{% from 'evidence_macros.html' import create_evidence, update_evidence, show_evidence, delete_evidence %}
+
+
+{% macro create_premise(argumentid, premisecreateform, opponent, premise=None) %}
+                <div class="form-group">
+                    <form method="post" action="{{ url_for('premise_create') }}">
+                        {{ premisecreateform.csrf_token }}
+                        {% if premise %}{{ premisecreateform.parent(value=premise.id) }}{% endif %}
+                        {{ premisecreateform.opponent(value=opponent) }}
+                        {{ premisecreateform.argumentid(value=argumentid) }}
+                        {{ premisecreateform.text(class_='form-control', placeholder="Add a new premise") }}
+                        <input type="submit" class="btn btn-primary">
+                    </form>
+                </div>
+{% endmacro %}
+
+
+{% macro update_premise() %}
+
+{% endmacro %}
+
+
+{% macro delete_premise(premise, premisedeleteform) %}
+                        <form method="post" action="{{ url_for('premise_delete') }}">
+                            {{ premisedeleteform.csrf_token }}
+                            {{ premisedeleteform.premiseid(value=premise.id) }}
+                            <input class="dropdown-item" type="submit" value="Delete Premise">
+                        </form>
+{% endmacro %}
+
+
+{% macro show_premise(premises, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, opponent, create_premise_id=None, create_evidence_id=None, even_odd='even') %}
+        {% for premise in premises %}
+            <div class="alert {% if even_odd == 'even' %}alert-primary{% else %}alert-warning{% endif %}">
+                <div class="float-right dropdown show">
+                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="oi oi-menu"></span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a href="{{ url_for('argument_get', argumentid=premise.argumentid, create_evidence_id=premise.id) }}" class="dropdown-item">Add Evidence</a>
+                        <a href="{{ url_for('argument_get', argumentid=premise.argumentid, create_premise_id=premise.id) }}" class="dropdown-item">Add Sub-Premise</a>
+                        <a href="{{ url_for('argument_get', argumentid=premise.argumentid, update_premise_id=premise.id) }}" class="dropdown-item">Update Premise</a>
+                        {{ delete_premise(premise, premisedeleteform) }}
+                    </div>
+                </div>
+                <p>{{ premise.text }}</p>
+                {{ show_evidence(premise, evidencedeleteform, evidencecreateform, create_evidence_id) }}
+                {% if even_odd == 'even' %}
+                    {{ show_premise(premise.children, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, opponent, create_premise_id, create_evidence_id, even_odd='odd') }}
+                {% else %}
+                    {{ show_premise(premise.children, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, opponent, create_premise_id, create_evidence_id) }}
+                {% endif %}
+                {% if create_premise_id == premise.id %}{{ create_premise(premise.argumentid, premisecreateform, opponent, premise) }}{% endif %}
+            </div>
+        {% endfor %}
+{% endmacro %}
