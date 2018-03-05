@@ -31,8 +31,8 @@
 
 {% macro show_premise(premises, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, opponent, create_premise_id=None, create_evidence_id=None, even_odd='even') %}
         {% for premise in premises %}
-            <div class="alert {% if even_odd == 'even' %}alert-primary{% else %}alert-warning{% endif %}">
-                <div class="float-right dropdown show">
+            <div class="premise alert {% if even_odd == 'even' %}alert-primary{% else %}alert-warning{% endif %}">
+                <div class="premise-menu float-right dropdown show">
                     <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="oi oi-menu"></span>
                     </a>
