@@ -24,9 +24,9 @@
 {% macro show_evidence(premise, evidencedeleteform, evidencecreateform, create_evidence_id) %}
                 <ul>
                     {% for evidence in premise.evidence %}
-                        <li>
+                        <li class="evidence">
                             {{ evidence.text }}
-                            <div class="float-right dropdown show">
+                            <div class="evidence-menu float-right dropdown show">
                                 <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="oi oi-menu"></span>
                                 </a>
