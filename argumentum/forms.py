@@ -36,7 +36,7 @@ class PremiseDeleteForm(FlaskForm):
 
 class PremiseUpdateForm(FlaskForm):
     premiseid = IntegerField('Premise ID', validators=[DataRequired()], widget=HiddenInput())
-    text = StringField('Premise Text', validators=[DataRequired()], widget=HiddenInput())
+    text = TextAreaField('Premise Text', validators=[DataRequired()])
 
 
 class EvidenceCreateForm(FlaskForm):
