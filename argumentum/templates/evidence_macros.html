@@ -7,8 +7,12 @@
 {% endmacro %}
 
 
-{% macro update_evidence(premises, premiseform, argument, opponent, even_odd='even') %}
-
+{% macro update_evidence(evidence, evidenceupdateform) %}
+                        <form method="post" action="{{ url_for('evidence_update') }}">
+                        {{ evidenceupdateform.csrf_token }}
+                        {{ evidenceupdateform.evidenceid(value=evidence.id) }}
+                        {{ evidenceupdateform.text(class_='form-control form-control-sm', style='display: inline-block;', value=evidence.text) }}
+                        </form>
 {% endmacro %}
 
 
@@ -16,24 +20,29 @@
                                 <form method="post" action="{{ url_for('evidence_delete') }}">
                                     {{ evidencedeleteform.csrf_token }}
                                     {{ evidencedeleteform.evidenceid(value=evidence.id) }}
-                                    <input class="dropdown-item" type="submit" value="Delete">
+                                    <input class="dropdown-item" type="submit" value="Delete Evidence">
                                 </form>
 {% endmacro %}
 
 
-{% macro show_evidence(premise, evidencedeleteform, evidencecreateform, create_evidence_id) %}
+{% macro show_evidence(premise, evidencedeleteform, evidencecreateform, evidenceupdateform, create_evidence_id, update_evidence_id) %}
                 <ul>
                     {% for evidence in premise.evidence %}
                         <li class="evidence">
-                            {{ evidence.text }}
-                            <div class="evidence-menu float-right dropdown show">
-                                <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="oi oi-menu"></span>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    {{ delete_evidence(evidence, evidencedeleteform) }}
+                            {% if update_evidence_id == evidence.id %}
+                                {{ update_evidence(evidence, evidenceupdateform) }}
+                            {% else %}
+                                {{ evidence.text }}
+                                <div class="evidence-menu float-right dropdown show">
+                                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="oi oi-menu"></span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a href="{{ url_for('argument_get', argumentid=premise.argumentid, update_evidence_id=evidence.id) }}" class="dropdown-item">Update Evidence</a>
+                                        {{ delete_evidence(evidence, evidencedeleteform) }}
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         </li>
                     {% endfor %}
                     {% if create_evidence_id == premise.id %}

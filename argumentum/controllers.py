@@ -32,8 +32,10 @@ def argument_get(argumentid):
     premisedeleteform = PremiseDeleteForm()
     evidencecreateform = EvidenceCreateForm()
     evidencedeleteform = EvidenceDeleteForm()
+    evidenceupdateform = EvidenceUpdateForm()
     create_premise_id = request.args.get('create_premise_id', type=int)
     create_evidence_id = request.args.get('create_evidence_id', type=int)
+    update_evidence_id = request.args.get('update_evidence_id', type=int)
     return render_template(
         'argument.html',
         argument=argument,
@@ -41,8 +43,10 @@ def argument_get(argumentid):
         premisedeleteform=premisedeleteform,
         evidencecreateform=evidencecreateform,
         evidencedeleteform=evidencedeleteform,
+        evidenceupdateform=evidenceupdateform,
         create_premise_id=create_premise_id,
-        create_evidence_id=create_evidence_id
+        create_evidence_id=create_evidence_id,
+        update_evidence_id=update_evidence_id
     )
 
 

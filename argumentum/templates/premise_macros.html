@@ -29,7 +29,7 @@
 {% endmacro %}
 
 
-{% macro show_premise(premises, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, opponent, create_premise_id=None, create_evidence_id=None, even_odd='even') %}
+{% macro show_premise(premises, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, evidenceupdateform, opponent, create_premise_id=None, create_evidence_id=None, update_evidence_id=None, even_odd='even') %}
         {% for premise in premises %}
             <div class="premise alert {% if even_odd == 'even' %}alert-primary{% else %}alert-warning{% endif %}">
                 <div class="premise-menu float-right dropdown show">
@@ -44,11 +44,11 @@
                     </div>
                 </div>
                 <p>{{ premise.text }}</p>
-                {{ show_evidence(premise, evidencedeleteform, evidencecreateform, create_evidence_id) }}
+                {{ show_evidence(premise, evidencedeleteform, evidencecreateform, evidenceupdateform, create_evidence_id, update_evidence_id) }}
                 {% if even_odd == 'even' %}
-                    {{ show_premise(premise.children, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, opponent, create_premise_id, create_evidence_id, even_odd='odd') }}
+                    {{ show_premise(premise.children, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, evidenceupdateform, opponent, create_premise_id, create_evidence_id, update_evidence_id, even_odd='odd') }}
                 {% else %}
-                    {{ show_premise(premise.children, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, opponent, create_premise_id, create_evidence_id) }}
+                    {{ show_premise(premise.children, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, evidenceupdateform, opponent, create_premise_id, create_evidence_id, update_evidence_id) }}
                 {% endif %}
                 {% if create_premise_id == premise.id %}{{ create_premise(premise.argumentid, premisecreateform, opponent, premise) }}{% endif %}
             </div>

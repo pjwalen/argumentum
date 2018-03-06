@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         <div class="col">
-            {{ show_premise(argument.left_premises, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, 'left', create_premise_id, create_evidence_id) }}
+            {{ show_premise(argument.left_premises, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, evidenceupdateform, 'left', create_premise_id, create_evidence_id, update_evidence_id) }}
             {% if create_premise_id == 0 %}
                 {{ create_premise(argument.id, premisecreateform, 'left') }}
             {% else %}
@@ -18,7 +18,7 @@
             {% endif %}
         </div>
         <div class="col">
-            {{ show_premise(argument.right_premises, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, 'right', create_premise_id, create_evidence_id) }}
+            {{ show_premise(argument.right_premises, premisedeleteform, premisecreateform, evidencedeleteform, evidencecreateform, evidenceupdateform, 'right', create_premise_id, create_evidence_id, update_evidence_id) }}
             {% if create_premise_id == -1 %}
                 {{ create_premise(argument.id, premisecreateform, 'right') }}
             {% else %}
