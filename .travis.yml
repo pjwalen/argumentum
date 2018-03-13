@@ -1,7 +1,7 @@
 language: python
 python:
   - "3.6"
-script: setup.py test
+script: pytest
 deploy:
   provider: elasticbeanstalk
   access_key_id: AKIAILLT3L5Y2WK65U6Q
