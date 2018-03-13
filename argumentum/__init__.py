@@ -18,6 +18,10 @@ class default_settings(object):
 application = Flask(__name__)
 application.secret_key = os.urandom(24)
 application.config.from_object('argumentum.default_settings')
+
+if 'RDS_HOSTNAME' in os.environ:
+    application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{RDS_USERNAME}:{RDS_PASSWORD}@{RDS_HOSTNAME}:{RDS_PORT}/{RDS_DB_NAME}'.format(**os.environ)
+
 db = SQLAlchemy(application)
 
 from argumentum.controllers import *
