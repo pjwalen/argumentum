@@ -9,7 +9,7 @@ deploy:
     secure: "sQ4zfUexrbB8e9tSSiRaH1BCzegor6rN9U12uxaJvjZAqrtuWgO26oRDM0QTioQKQBUfWC627ZXZOF+wXPoSrdzWhg//zuXiaLcEzk6+HtqAgrPfEIPJWPbIzBReUjyBH0WLmgXUNLnXMPyN9B4r03ZzTyYTUIBKu0Gmuugji1nlW4iLYuQt2B7aiyMOdLTXqJINrMh2qMCnbSw6Ceno0mtHtoVl24reD2eFIjsebYIJPuaZ4qQr4Yx8mftjPtrAxllb88z3qm36Ksp+IcG8n886sMnib+sxKt7HT9St6kNKdv4uWWErOcXR5YmYiasOoT3I/6435Zl/5XqUJzeIzIwHUq35WSnsACVJ8ex9TQUv696V/2S4eQ/5YZ5adLnLyIFm+cgycxJ8lBJqvQjA3hthJfB0TFj3kk2kFOkGej6m20H0agd8B7S23Kch69fsgOCE6GNMccmeIdUGZ04j7y518AczbLe8XM6Hb/6OhA2VF0waeznpUaZc4okYZXr6KWnlpjyCK+DERiBAlzjxFkXfYmRKoyn2IP6ftq8fpvDqzMi3PCwJViYsOCV18JHySSIo9C6B2zqlHMKjpLh9U85ZpXTzkEfwtXaDpajnpv1Fk+ujsPAewXChit4czLbU+mTVC38tu/MD44ZJZsvgolZoKNeLDZVCQOip68Ug/Uo="
   region: "us-west-2"  
   app: "argumentum"
-  env: "dev"
+  env: "argumentum-dev"
   bucket_name: "elasticbeanstalk-us-west-2-810413367899"
   on:
     branch: development
