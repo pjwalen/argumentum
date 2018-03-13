@@ -11,3 +11,5 @@ deploy:
   app: "argumentum"
   env: "dev"
   bucket_name: "elasticbeanstalk-us-west-2-810413367899"
+  on:
+    branch: development
