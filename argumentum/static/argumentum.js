@@ -1,17 +1,13 @@
 $(function() {
-    $('.premise').mouseover(function() {
-        $(this).children('.premise-menu').show();
+    $('.premise-menu > a').hover(function() {
+        $(this).fadeTo(0, 1);
+    }, function() {
+        $(this).fadeTo(0, .1);
     });
 
-    $('.premise').mouseleave(function() {
-        $(this).children('.premise-menu').hide();
-    });
-
-    $('.evidence').mouseover(function() {
-        $(this).children('.evidence-menu').show();
-    });
-
-    $('.evidence').mouseleave(function() {
-        $(this).children('.evidence-menu').hide();
+    $('.evidence-menu > a').hover(function() {
+        $(this).fadeTo(0, 1);
+    }, function() {
+        $(this).fadeTo(0, .1);
     });
 });
