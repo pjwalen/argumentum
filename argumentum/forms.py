@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, TextAreaField
+from wtforms import StringField, IntegerField, TextAreaField, SelectField
 from wtforms.widgets import HiddenInput
 from wtforms.validators import DataRequired, Optional, AnyOf
 
@@ -25,7 +25,7 @@ class ArgumentUpdateForm(FlaskForm):
 
 class PremiseCreateForm(FlaskForm):
     argumentid = IntegerField('Argument ID', validators=[DataRequired()], widget=HiddenInput())
-    opponent = StringField('Opponent', validators=[DataRequired(), AnyOf(['left', 'right'])], widget=HiddenInput())
+    opponent = SelectField('Opponent', choices=[('left', 'left'), ('right', 'right')])
     parent = IntegerField('Premise ID', validators=[Optional()], widget=HiddenInput())
     text = TextAreaField('Text', validators=[DataRequired()])
 
