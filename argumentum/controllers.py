@@ -34,10 +34,21 @@ def argument_get(argumentid):
     evidencecreateform = EvidenceCreateForm()
     evidencedeleteform = EvidenceDeleteForm()
     evidenceupdateform = EvidenceUpdateForm()
+
     create_premise_id = request.args.get('create_premise_id', type=int)
     create_evidence_id = request.args.get('create_evidence_id', type=int)
     update_evidence_id = request.args.get('update_evidence_id', type=int)
     update_premise_id = request.args.get('update_premise_id', type=int)
+
+    premisecreateform.opponent.choices = [('left', argument.left_opponent), ('right', argument.right_opponent)]
+    if create_premise_id == 0:
+        premisecreateform.opponent.default = 'left'
+        premisecreateform.opponent.render_kw = {'readonly': True}
+    elif create_premise_id == -1:
+        premisecreateform.opponent.default = 'right'
+        premisecreateform.opponent.render_kw = {'readonly': True}
+    premisecreateform.process()
+
     return render_template(
         'argument.html',
         argument=argument,
@@ -97,6 +108,8 @@ def argument_delete():
 
 @application.route('/premise', methods=['POST'])
 def premise_create():
+
+    print(request.form)
     premiseform = PremiseCreateForm()
     if premiseform.validate_on_submit():
         premise = Premise()

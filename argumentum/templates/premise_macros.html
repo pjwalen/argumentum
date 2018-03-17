@@ -2,17 +2,19 @@
 
 
 {% macro create_premise(argumentid, premisecreateform, opponent, premise=None) %}
-    <div class="form-group">
+    <div class="alert alert-warning">
         <form method="post" action="{{ url_for('premise_create') }}">
             {{ premisecreateform.csrf_token }}
             {% if premise %}{{ premisecreateform.parent(value=premise.id) }}{% endif %}
-            {{ premisecreateform.opponent(value=opponent) }}
             {{ premisecreateform.argumentid(value=argumentid) }}
+            <div class="form-group">
+                {{ premisecreateform.opponent(class_='form-control') }}
+            </div>
             <div class="form-group">
             {{ premisecreateform.text(class_='form-control', placeholder="Add a new premise") }}
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary">
+                <input type="submit" class="btn btn-primary" value="Create Premise">
             </div>
         </form>
     </div>
@@ -59,7 +61,7 @@
                         {{ delete_premise(premise, premisedeleteform) }}
                     </div>
                 </div>
-                <p><small>{% if premise.opponent == 'left' %}{{ premise.argument.left_opponent }}{% else %}{{ premise.argument.right_opponent }}{% endif %} wrote...</small><br>{{ premise.text }}</p>
+                <p><small><em>{% if premise.opponent == 'left' %}{{ premise.argument.left_opponent }}{% else %}{{ premise.argument.right_opponent }}{% endif %} wrote...</em></small><br>{{ premise.text }}</p>
             {% endif %}
             {{ show_evidence(premise, evidencedeleteform, evidencecreateform, evidenceupdateform, create_evidence_id, update_evidence_id) }}
             {% if even_odd == 'even' %}
