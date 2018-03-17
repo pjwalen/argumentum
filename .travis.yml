@@ -3,13 +3,23 @@ python:
   - "3.6"
 script: pytest tests/__init__.py
 deploy:
-  provider: elasticbeanstalk
+- provider: elasticbeanstalk
   access_key_id: AKIAILLT3L5Y2WK65U6Q
   secret_access_key:
     secure: "sQ4zfUexrbB8e9tSSiRaH1BCzegor6rN9U12uxaJvjZAqrtuWgO26oRDM0QTioQKQBUfWC627ZXZOF+wXPoSrdzWhg//zuXiaLcEzk6+HtqAgrPfEIPJWPbIzBReUjyBH0WLmgXUNLnXMPyN9B4r03ZzTyYTUIBKu0Gmuugji1nlW4iLYuQt2B7aiyMOdLTXqJINrMh2qMCnbSw6Ceno0mtHtoVl24reD2eFIjsebYIJPuaZ4qQr4Yx8mftjPtrAxllb88z3qm36Ksp+IcG8n886sMnib+sxKt7HT9St6kNKdv4uWWErOcXR5YmYiasOoT3I/6435Zl/5XqUJzeIzIwHUq35WSnsACVJ8ex9TQUv696V/2S4eQ/5YZ5adLnLyIFm+cgycxJ8lBJqvQjA3hthJfB0TFj3kk2kFOkGej6m20H0agd8B7S23Kch69fsgOCE6GNMccmeIdUGZ04j7y518AczbLe8XM6Hb/6OhA2VF0waeznpUaZc4okYZXr6KWnlpjyCK+DERiBAlzjxFkXfYmRKoyn2IP6ftq8fpvDqzMi3PCwJViYsOCV18JHySSIo9C6B2zqlHMKjpLh9U85ZpXTzkEfwtXaDpajnpv1Fk+ujsPAewXChit4czLbU+mTVC38tu/MD44ZJZsvgolZoKNeLDZVCQOip68Ug/Uo="
-  region: "us-west-2"  
+  region: "us-west-2"
   app: "argumentum"
   env: "argumentum-dev"
   bucket_name: "elasticbeanstalk-us-west-2-810413367899"
   on:
     branch: development
+- provider: elasticbeanstalk
+  access_key_id: AKIAIJW2WVPZ5LEPP4BQ
+  secret_access_key:
+    secure: "WexmKZ9+SlgQj2+jlO0K8wdQ1ROc60q4B2AdT5AZAxL990xEEBaE1IaaLzjBMGChrVaLAeejCTGmatq1JDnO1fWJNn1g5NB7KWEgUJvUMyKZrPf/7r2IDDTMm6rS50K5GpQFG2/CjNTSTZ3tlNJzDYpBHlCtlAgvryQ+3kiYxYhRrWu/sNbLUnQe7JxU9vRRbxXBY8p7ngW3L4b2tzl1Rt5fEFWClg1I6l/zoVTyWd2lS9SGg4S1TSB+SO+Siylmmm1vGay+IwF2k09AjbEhqwdrdNvU5RnalJjx8ezPHpVA8K7TH8wxjV2EyZLJe/aX1e2xRxldG/6yzTMPdlqsJYz9yIqqT6xy+sJErkpaz4Kc1kmVho6U+nzrjy05dmybPCGEtwApjqTE3ynywEyVBd8DyL1LeWhj9sMuTifHj5Jzi/ao9+PvRmOpLsSn0i5BTM2GUa+5yXMp4d7AC6dlNdZYDT7hcVt4zyP8+XlmreonRQ2Hhudzd9NDE3jcW7JzmZ9sC8u6Y4TSkizb8RHz9DSbvyGz6EiqrjHi4wuAv9jXZ0WWpDNcO09OIdaHjnIrmQ9ymy0XIQnD6Y4CqoSBW7CS5UJLpofDqFw3cZuxfo1ice0dSBK+ETav5x49zqvbAzNDsY/TXif9QqOVqjSNW3DxyNHrjEbd93Gv1iWRbU0="
+  region: "us-west-2"
+  app: "argumentum"
+  env: "argumentum-prod"
+  bucket_name: "elasticbeanstalk-us-east-2-897068678282"
+  on:
+    branch: master
