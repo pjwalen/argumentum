@@ -1,0 +1,49 @@
+{% macro update_argument(argument, argumentupdateform) %}
+                    <div class="alert alert-primary">
+                        <form method="post" action="{{ url_for('argument_update') }}">
+                            <div class="form-group" style="margin-top: 1rem;">
+                                {{ argumentupdateform.argumentid(class='form-control', value=argument.id) }}
+                                {{ argumentupdateform.title(placeholder='Title', class='form-control', value=argument.title) }}
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    {{ argumentupdateform.left_opponent(placeholder='Left Opponent', class='form-control', value=argument.left_opponent) }}
+                                    <span class="input-group-text">&</span>
+                                    {{ argumentupdateform.right_opponent(placeholder='Right Opponent', class='form-control', value=argument.right_opponent) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Description" class="form-control" name=description>{{ argument.description }}</textarea>
+                                {{ argumentupdateform.csrf_token }}
+                                <input type="submit" style="display: none;">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Update">
+                                <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+{% endmacro %}
+
+
+{% macro show_argument(argument, argumentdeleteform) %}
+                    <div class="alert alert-primary">
+                        <div class="float-right dropdown show">
+                            <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="oi oi-menu"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                <form method="post" action="{{ url_for('argument_delete') }}">
+                                    {{ argumentdeleteform.csrf_token }}
+                                    {{ argumentdeleteform.argumentid(value=argument.id) }}
+                                    <input class="dropdown-item" type="submit" value="Delete">
+                                </form>
+                                <a href="{{ url_for('index', update_argument_id=argument.id) }}" class="dropdown-item">Update</a>
+                            </div>
+                        </div>
+                        <h2><a href="{{ url_for('argument_get', argumentid=argument.id) }}">{{ argument.title }}</a></h2>
+                        <p><b>{{ argument.left_opponent }} & {{ argument.right_opponent }}</b></p>
+                        <p>{{ argument.description }}</p>
+                        <p><small>Created: {{ argument.created }}<br />Updated: {{ argument.updated }}</small></p>
+                    </div>
+{% endmacro %}

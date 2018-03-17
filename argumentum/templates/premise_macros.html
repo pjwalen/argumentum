@@ -1,0 +1,75 @@
+{% from 'evidence_macros.html' import create_evidence, update_evidence, show_evidence, delete_evidence %}
+
+
+{% macro create_premise(argumentid, premisecreateform, opponent, premise=None) %}
+    <div class="alert alert-warning">
+        <form method="post" action="{{ url_for('premise_create') }}">
+            {{ premisecreateform.csrf_token }}
+            {% if premise %}{{ premisecreateform.parent(value=premise.id) }}{% endif %}
+            {{ premisecreateform.argumentid(value=argumentid) }}
+            <div class="form-group">
+                {{ premisecreateform.opponent(class_='form-control') }}
+            </div>
+            <div class="form-group">
+            {{ premisecreateform.text(class_='form-control', placeholder="Add a new premise") }}
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Create Premise">
+            </div>
+        </form>
+    </div>
+{% endmacro %}
+
+
+{% macro update_premise(premise, premiseupdateform) %}
+    <form method="post" action="{{ url_for('premise_update') }}">
+        {{ premiseupdateform.csrf_token }}
+        {{ premiseupdateform.premiseid(value=premise.id) }}
+        <div class="form-group">
+            <textarea class="form-control" name="text">{{ premise.text }}</textarea>
+        </div>
+         <div class="form-group">
+            <input type="submit" class="btn btn-primary">
+        </div>
+    </form>
+{% endmacro %}
+
+
+{% macro delete_premise(premise, premisedeleteform) %}
+    <form method="post" action="{{ url_for('premise_delete') }}">
+        {{ premisedeleteform.csrf_token }}
+        {{ premisedeleteform.premiseid(value=premise.id) }}
+        <input class="dropdown-item" type="submit" value="Delete Premise">
+    </form>
+{% endmacro %}
+
+
+{% macro show_premise(premises, premisedeleteform, premisecreateform, premiseupdateform, evidencedeleteform, evidencecreateform, evidenceupdateform, opponent, create_premise_id=None, create_evidence_id=None, update_evidence_id=None, update_premise_id=None, even_odd='even') %}
+    {% for premise in premises %}
+        <div class="premise alert {% if even_odd == 'even' %}alert-primary{% else %}alert-warning{% endif %}">
+            {% if update_premise_id == premise.id %}
+                {{ update_premise(premise, premiseupdateform) }}
+            {% else %}
+                <div class="premise-menu float-right dropdown show">
+                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="oi oi-menu"></span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a href="{{ url_for('argument_get', argumentid=premise.argumentid, create_evidence_id=premise.id) }}" class="dropdown-item">Add Evidence</a>
+                        <a href="{{ url_for('argument_get', argumentid=premise.argumentid, create_premise_id=premise.id) }}" class="dropdown-item">Add Sub-Premise</a>
+                        <a href="{{ url_for('argument_get', argumentid=premise.argumentid, update_premise_id=premise.id) }}" class="dropdown-item">Update Premise</a>
+                        {{ delete_premise(premise, premisedeleteform) }}
+                    </div>
+                </div>
+                <p><small><em>{% if premise.opponent == 'left' %}{{ premise.argument.left_opponent }}{% else %}{{ premise.argument.right_opponent }}{% endif %} wrote...</em></small><br>{{ premise.text }}</p>
+            {% endif %}
+            {{ show_evidence(premise, evidencedeleteform, evidencecreateform, evidenceupdateform, create_evidence_id, update_evidence_id) }}
+            {% if even_odd == 'even' %}
+                {{ show_premise(premise.children, premisedeleteform, premisecreateform, premiseupdateform, evidencedeleteform, evidencecreateform, evidenceupdateform, opponent, create_premise_id, create_evidence_id, update_evidence_id, update_premise_id, even_odd='odd') }}
+            {% else %}
+                {{ show_premise(premise.children, premisedeleteform, premisecreateform, premiseupdateform, evidencedeleteform, evidencecreateform, evidenceupdateform, opponent, create_premise_id, create_evidence_id, update_evidence_id, update_premise_id) }}
+            {% endif %}
+            {% if create_premise_id == premise.id %}{{ create_premise(premise.argumentid, premisecreateform, opponent, premise) }}{% endif %}
+        </div>
+    {% endfor %}
+{% endmacro %}
