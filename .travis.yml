@@ -17,7 +17,7 @@ deploy:
   access_key_id: AKIAIJW2WVPZ5LEPP4BQ
   secret_access_key:
     secure: "WexmKZ9+SlgQj2+jlO0K8wdQ1ROc60q4B2AdT5AZAxL990xEEBaE1IaaLzjBMGChrVaLAeejCTGmatq1JDnO1fWJNn1g5NB7KWEgUJvUMyKZrPf/7r2IDDTMm6rS50K5GpQFG2/CjNTSTZ3tlNJzDYpBHlCtlAgvryQ+3kiYxYhRrWu/sNbLUnQe7JxU9vRRbxXBY8p7ngW3L4b2tzl1Rt5fEFWClg1I6l/zoVTyWd2lS9SGg4S1TSB+SO+Siylmmm1vGay+IwF2k09AjbEhqwdrdNvU5RnalJjx8ezPHpVA8K7TH8wxjV2EyZLJe/aX1e2xRxldG/6yzTMPdlqsJYz9yIqqT6xy+sJErkpaz4Kc1kmVho6U+nzrjy05dmybPCGEtwApjqTE3ynywEyVBd8DyL1LeWhj9sMuTifHj5Jzi/ao9+PvRmOpLsSn0i5BTM2GUa+5yXMp4d7AC6dlNdZYDT7hcVt4zyP8+XlmreonRQ2Hhudzd9NDE3jcW7JzmZ9sC8u6Y4TSkizb8RHz9DSbvyGz6EiqrjHi4wuAv9jXZ0WWpDNcO09OIdaHjnIrmQ9ymy0XIQnD6Y4CqoSBW7CS5UJLpofDqFw3cZuxfo1ice0dSBK+ETav5x49zqvbAzNDsY/TXif9QqOVqjSNW3DxyNHrjEbd93Gv1iWRbU0="
-  region: "us-west-2"
+  region: "us-east-2"
   app: "argumentum"
   env: "argumentum-prod"
   bucket_name: "elasticbeanstalk-us-east-2-897068678282"
