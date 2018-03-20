@@ -33,6 +33,7 @@ class Premise(db.Model):
     children = db.relationship('Premise', lazy=True, cascade='all, delete-orphan')
     parent = db.Column(db.Integer, db.ForeignKey('premise.id', ondelete='cascade'), default=None)
     opponent = db.Column(db.Text)
+    side = db.Column(db.Text)
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
