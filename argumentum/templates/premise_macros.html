@@ -1,11 +1,14 @@
 {% from 'evidence_macros.html' import create_evidence, update_evidence, show_evidence, delete_evidence %}
 
 
-{% macro create_premise(argumentid, premisecreateform, opponent, premise=None) %}
+{% macro create_premise(argumentid, premisecreateform, opponent, side, premise=None) %}
     <div class="alert alert-warning">
         <form method="post" action="{{ url_for('premise_create') }}">
             {{ premisecreateform.csrf_token }}
-            {% if premise %}{{ premisecreateform.parent(value=premise.id) }}{% endif %}
+            {{ premisecreateform.side(value=side) }}
+            {% if premise %}
+                {{ premisecreateform.parent(value=premise.id) }}
+            {% endif %}
             {{ premisecreateform.argumentid(value=argumentid) }}
             <div class="form-group">
                 {{ premisecreateform.opponent(class_='form-control') }}
