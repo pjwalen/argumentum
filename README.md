@@ -1,7 +1,9 @@
 # argumentum
 ## How to run a development server
+    Install Python 3.6
     git clone -b development https://github.com/pjwalen/argumentum.git
     cd argumentum
+    pip install -r requirements.txt
     python application.py
     Open a browser to: http://127.0.0.1:5000/
 
