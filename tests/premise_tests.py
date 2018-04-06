@@ -22,6 +22,7 @@ class PremiseTests(unittest.TestCase):
             data=dict(
                 argumentid=self.argumentid,
                 opponent='left',
+                side='left',
                 text='Premise text'
             )
         )
