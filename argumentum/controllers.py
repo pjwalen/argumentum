@@ -119,6 +119,7 @@ def premise_create():
         premise.text = premiseform.text.data
         db.session.add(premise)
         db.session.commit()
+    print(premiseform.errors)
     return redirect(urlparse(request.referrer).path)
 
 

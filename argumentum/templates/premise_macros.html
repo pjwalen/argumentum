@@ -72,7 +72,7 @@
             {% else %}
                 {{ show_premise(premise.children, premisedeleteform, premisecreateform, premiseupdateform, evidencedeleteform, evidencecreateform, evidenceupdateform, opponent, create_premise_id, create_evidence_id, update_evidence_id, update_premise_id) }}
             {% endif %}
-            {% if create_premise_id == premise.id %}{{ create_premise(premise.argumentid, premisecreateform, opponent, premise) }}{% endif %}
+            {% if create_premise_id == premise.id %}{{ create_premise(premise.argumentid, premisecreateform, opponent, premise.side, premise) }}{% endif %}
         </div>
     {% endfor %}
 {% endmacro %}

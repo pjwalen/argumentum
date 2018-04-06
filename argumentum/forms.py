@@ -37,14 +37,15 @@ class PremiseCreateForm(FlaskForm):
             return
 
         # Get the parent premise record from the database.
-        parent_premise = Premise.query.get(form.argumentid)
+        parent_premise = Premise.query.get(form.parent.data)
 
         # Check if the parent exists in the database.
         if not parent_premise:
             raise ValidationError('This parent doesn\'t exist in the database.')
 
-        # Check if the paren't and child share the same side.
-        if form.side != parent_premise.side:
+        # Check if the parent and child share the same side.
+        if form.side.data != parent_premise.side:
+            print(form.side.data, parent_premise.side)
             raise ValidationError('')
 
 
