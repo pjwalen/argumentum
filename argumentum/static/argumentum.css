@@ -2,7 +2,7 @@
     opacity: .2;
 }
 
-.premise {
+.premise, .argument, .btn {
     /*border-width: 1px;*/
     box-shadow: -2px -2px 5px #aaa;
 }
