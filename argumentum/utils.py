@@ -20,6 +20,7 @@ def create_demo_data():
     left_premise = Premise(
         argumentid=argument.id,
         opponent='left',
+        side='left',
         text='This is a demonstration argument.',
         created=datetime.datetime.now(),
         updated=datetime.datetime.now()
@@ -27,6 +28,7 @@ def create_demo_data():
     right_premise = Premise(
         argumentid=argument.id,
         opponent='right',
+        side='right',
         text='This is a demonstration argument.',
         created=datetime.datetime.now(),
         updated=datetime.datetime.now()
@@ -39,6 +41,7 @@ def create_demo_data():
     sub_premise = Premise(
         argumentid=argument.id,
         parent=left_premise.id,
+        side='left',
         text='This is a demonstration argument.',
         created=datetime.datetime.now(),
         updated=datetime.datetime.now()

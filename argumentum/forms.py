@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, TextAreaField, SelectField
 from wtforms.widgets import HiddenInput
-from wtforms.validators import DataRequired, Optional, AnyOf
+from wtforms.validators import DataRequired, Optional, AnyOf, ValidationError
+from argumentum.models import Premise
 
 
 class ArgumentCreateForm(FlaskForm):
@@ -26,8 +27,25 @@ class ArgumentUpdateForm(FlaskForm):
 class PremiseCreateForm(FlaskForm):
     argumentid = IntegerField('Argument ID', validators=[DataRequired()], widget=HiddenInput())
     opponent = SelectField('Opponent', choices=[('left', 'left'), ('right', 'right')])
-    parent = IntegerField('Premise ID', validators=[Optional()], widget=HiddenInput())
+    parent = IntegerField('Parent Premise ID', validators=[Optional()], widget=HiddenInput())
+    side = StringField('Side', validators=[AnyOf(['left', 'right'])], widget=HiddenInput())
     text = TextAreaField('Text', validators=[DataRequired()])
+
+    def validate_parent(form, field):
+        # Check if form.parent is none, if so, short-circuit validation.
+        if form.parent is None:
+            return
+
+        # Get the parent premise record from the database.
+        parent_premise = Premise.query.get(form.parent.data)
+
+        # Check if the parent exists in the database.
+        if not parent_premise:
+            raise ValidationError('This parent doesn\'t exist in the database.')
+
+        # Check if the parent and child share the same side.
+        if form.side.data != parent_premise.side:
+            raise ValidationError('')
 
 
 class PremiseDeleteForm(FlaskForm):

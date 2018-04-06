@@ -9,13 +9,13 @@ class Argument(db.Model):
     right_opponent = db.Column(db.Text)
     left_premises = db.relationship(
         'Premise',
-        primaryjoin="and_(Premise.argumentid == Argument.id, Premise.opponent == 'left', Premise.parent == None)",
+        primaryjoin="and_(Premise.argumentid == Argument.id, Premise.side == 'left', Premise.parent == None)",
         lazy=True,
         cascade='all, delete-orphan'
     )
     right_premises = db.relationship(
         'Premise',
-        primaryjoin="and_(Premise.argumentid == Argument.id, Premise.opponent == 'right', Premise.parent == None)",
+        primaryjoin="and_(Premise.argumentid == Argument.id, Premise.side == 'right', Premise.parent == None)",
         lazy=True,
         cascade='all, delete-orphan'
     )
@@ -33,6 +33,7 @@ class Premise(db.Model):
     children = db.relationship('Premise', lazy=True, cascade='all, delete-orphan')
     parent = db.Column(db.Integer, db.ForeignKey('premise.id', ondelete='cascade'), default=None)
     opponent = db.Column(db.Text)
+    side = db.Column(db.Text)
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
