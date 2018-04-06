@@ -1,3 +1,24 @@
 .premise-menu > a, .evidence-menu > a {
     opacity: .2;
 }
+
+.premise, .argument, .btn {
+    /*border-width: 1px;*/
+    box-shadow: -2px -2px 5px #aaa;
+}
+
+.alert-primary {
+    background: #cce5ff; /* Old browsers */
+    background: -moz-linear-gradient(top, #cce5ff 0%, #dbedff 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #cce5ff 0%,#dbedff 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #cce5ff 0%,#dbedff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cce5ff', endColorstr='#dbedff',GradientType=0 ); /* IE6-9 */
+}
+
+.alert-warning {
+    background: #ffeeba; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffeeba 0%, #fff3d1 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #ffeeba 0%, #fff3d1 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #ffeeba 0%, #fff3d1 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffeeba', endColorstr='#fff3d1', GradientType=0); /* IE6-9 */
+}

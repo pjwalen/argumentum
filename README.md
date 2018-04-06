@@ -19,9 +19,9 @@ If need or want a real (persistent) database for you'll need to install PostgreS
 
 ## Running this in a free-tier AWS account.
 
-This application will fit nicely in a free-tier AWS account using elastic beanstalk backed by an postgresql RDS database.
+This application will fit nicely in a free-tier AWS account using elastic beanstalk backed by a postgresql RDS database.
 
-All you need to do to package up an instance to upload is create a zip file containing the following:
+All you need to do to package up an instance for uploading to aws is create a zip file containing the following:
 
     requirement.txt
     application.py
