@@ -49,7 +49,7 @@
 
 {% macro show_premise(premises, premisedeleteform, premisecreateform, premiseupdateform, evidencedeleteform, evidencecreateform, evidenceupdateform, opponent, create_premise_id=None, create_evidence_id=None, update_evidence_id=None, update_premise_id=None, even_odd='even') %}
     {% for premise in premises %}
-        <div class="premise alert {% if even_odd == 'even' %}alert-primary{% else %}alert-warning{% endif %}">
+        <div class="premise alert {% if premise.opponent == 'left' %}alert-primary{% else %}alert-warning{% endif %}">
             {% if update_premise_id == premise.id %}
                 {{ update_premise(premise, premiseupdateform) }}
             {% else %}
