@@ -108,12 +108,11 @@ def argument_delete():
 
 @application.route('/premise', methods=['POST'])
 def premise_create():
-
-    print(request.form)
     premiseform = PremiseCreateForm()
     if premiseform.validate_on_submit():
         premise = Premise()
         premise.opponent = premiseform.opponent.data
+        premise.side = premiseform.side.data
         premise.argumentid = premiseform.argumentid.data
         premise.parent = premiseform.parent.data
         premise.text = premiseform.text.data
