@@ -45,7 +45,6 @@ class PremiseCreateForm(FlaskForm):
 
         # Check if the parent and child share the same side.
         if form.side.data != parent_premise.side:
-            print(form.side.data, parent_premise.side)
             raise ValidationError('')
 
 

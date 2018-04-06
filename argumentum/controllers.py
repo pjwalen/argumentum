@@ -108,7 +108,6 @@ def argument_delete():
 
 @application.route('/premise', methods=['POST'])
 def premise_create():
-    print(request.form)
     premiseform = PremiseCreateForm()
     if premiseform.validate_on_submit():
         premise = Premise()
@@ -119,7 +118,6 @@ def premise_create():
         premise.text = premiseform.text.data
         db.session.add(premise)
         db.session.commit()
-    print(premiseform.errors)
     return redirect(urlparse(request.referrer).path)
 
 
