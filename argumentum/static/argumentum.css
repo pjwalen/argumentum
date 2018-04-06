@@ -1,3 +1,8 @@
 .premise-menu > a, .evidence-menu > a {
     opacity: .2;
 }
+
+.premise {
+    /*border-width: 1px;*/
+    box-shadow: -2px -2px 5px #aaa;
+}
