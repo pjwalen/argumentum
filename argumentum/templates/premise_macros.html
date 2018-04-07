@@ -2,7 +2,7 @@
 
 
 {% macro create_premise(argumentid, premisecreateform, opponent, side, premise=None) %}
-    <div class="alert alert-warning">
+    <div class="alert alert-warning  premise">
         <form method="post" action="{{ url_for('premise_create') }}">
             {{ premisecreateform.csrf_token }}
             {{ premisecreateform.side(value=side) }}
