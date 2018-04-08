@@ -43,10 +43,8 @@ def argument_get(argumentid):
     premisecreateform.opponent.choices = [('left', argument.left_opponent), ('right', argument.right_opponent)]
     if create_premise_id == 0:
         premisecreateform.opponent.default = 'left'
-        premisecreateform.opponent.render_kw = {'readonly': True}
     elif create_premise_id == -1:
         premisecreateform.opponent.default = 'right'
-        premisecreateform.opponent.render_kw = {'readonly': True}
     premisecreateform.process()
 
     return render_template(
